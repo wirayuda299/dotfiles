@@ -1,0 +1,18 @@
+local options = {
+  formatters_by_ft = {
+    lua = { "stylua" },
+    go = { "goimports", "gofmt" },
+    css = { "prettier" },
+    html = { "prettier" },
+    astro = { "prettier" },
+    ts_ls = { "prettier" },
+    javascript = { "prettier" }
+  },
+
+  format_on_save = {
+    timeout_ms = 500,
+    lsp_fallback = true,
+  },
+}
+
+return options
