@@ -1,37 +1,77 @@
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/nvchad/base46/"
-vim.g.mapleader = " "
+require 'kickstart.options'
+require 'kickstart.keymaps'
+require 'kickstart.autocmds'
 
--- bootstrap lazy and all plugins
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-
-if not vim.uv.fs_stat(lazypath) then
-  local repo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  if vim.v.shell_error ~= 0 then
+    error('Error cloning lazy.nvim:\n' .. out)
+  end
 end
 
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = require "configs.lazy"
+require('lazy').setup({
+  'tpope/vim-sleuth',
 
--- load plugins
-require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
+  { import = 'kickstart.plugins.mini' },
+  { import = 'kickstart.plugins.colors' },
+  { import = 'kickstart.plugins.lazydev' },
+  { import = 'kickstart.plugins.bufferline' },
+  { import = 'kickstart.plugins.blink' },
+  { import = 'kickstart.plugins.mason' },
+  { import = 'kickstart.plugins.indent_line' },
+  { import = 'kickstart.plugins.which-key' },
+  { import = 'kickstart.plugins.fzf' },
+  { import = 'kickstart.plugins.lint' },
+  { import = 'kickstart.plugins.autopairs' },
+  { import = 'kickstart.plugins.nvim-tree' },
+  { import = 'kickstart.plugins.gitsigns' },
+  { import = 'kickstart.plugins.lazygit' },
+  { import = 'kickstart.plugins.trouble' },
+  { import = 'kickstart.plugins.lsp' },
+  { import = 'kickstart.plugins.conform' },
+  { import = 'kickstart.plugins.treesitter' },
+  { import = 'kickstart.plugins.markdown' },
+  { import = 'kickstart.plugins.obsidian' },
+}, {
+
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        'gzip',
+        'matchit',
+        'matchparen',
+        'netrwPlugin',
+        'tarPlugin',
+        'tohtml',
+        'tutor',
+        'zipPlugin',
+      },
+    },
   },
-
-  { import = "plugins" },
-}, lazy_config)
-
--- load theme
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
-
-require "options"
-require "nvchad.autocmds"
-
-vim.schedule(function()
-  require "mappings"
-end)
+  ui = {
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
+    },
+    border = 'rounded',
+  },
+  change_detection = {
+    enabled = true,
+    notify = false,
+  },
+})
