@@ -52,7 +52,6 @@ return {
             },
           },
           ts_ls = {
-
             init_options = {
               hostInfo = 'neovim',
               preferences = {
@@ -102,7 +101,7 @@ return {
               gopls = {
                 gofumpt = true,
                 codelenses = {
-                  gc_details = false,
+                  gc_details = true,
                   generate = true,
                   regenerate_cgo = true,
                   run_govulncheck = true,
@@ -146,12 +145,6 @@ return {
             end,
           },
           lua_ls = {
-
-            -- mason = false, -- set to false if you don't want this server to be installed with mason
-            -- Use this to add any additional keymaps
-            -- for specific lsp servers
-            -- ---@type LazyKeysSpec[]
-            -- keys = {},
             settings = {
               Lua = {
                 workspace = {

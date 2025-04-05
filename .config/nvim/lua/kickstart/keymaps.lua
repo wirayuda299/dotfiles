@@ -23,13 +23,19 @@ keymap('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 keymap('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 keymap('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+keymap('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
+keymap('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height' })
+keymap('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Width' })
+keymap('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase Window Width' })
+
+vim.api.nvim_set_keymap('i', '<leader>cs', 'copilot#Suggest()', { expr = true, silent = true })
 --tab
 keymap('n', '<leader>bd', '<cmd>bd<cr>', { desc = 'Delete buffer' })
 keymap('n', '<S-Tab>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
-
 keymap('n', '<Tab>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
-
 keymap('n', '<leader>bo', '<cmd>%bd|e#|bd#<cr>', { desc = 'Close all buffers except current' })
+keymap('n', '<leader>bc', '<cmd>:%bd!<cr>', { desc = 'Close all buffers' })
+
 --lazy
 keymap('n', '<leader>l', '<cmd>Lazy<cr>', { desc = 'Open Lazy' })
 
@@ -112,3 +118,11 @@ end, { desc = 'Quickfix List' })
 
 keymap('n', '[q', vim.cmd.cprev, { desc = 'Previous Quickfix' })
 keymap('n', ']q', vim.cmd.cnext, { desc = 'Next Quickfix' })
+
+vim.keymap.set('n', '.', function()
+  require('grug-far').sync()
+end, { desc = 'Sync Current Search (grug-far)' })
+
+vim.keymap.set('n', '..', function()
+  require('grug-far').sync { all = true }
+end, { desc = 'Sync All Changes (grug-far)' })

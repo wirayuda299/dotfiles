@@ -12,11 +12,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
-
 require('lazy').setup({
   'tpope/vim-sleuth',
 
-  { import = 'kickstart.plugins.mini' },
+  { import = 'kickstart.plugins.search-replace' },
+  -- { import = 'kickstart.plugins.mini' },
   { import = 'kickstart.plugins.colors' },
   { import = 'kickstart.plugins.lazydev' },
   { import = 'kickstart.plugins.bufferline' },
@@ -30,7 +30,6 @@ require('lazy').setup({
   { import = 'kickstart.plugins.nvim-tree' },
   { import = 'kickstart.plugins.gitsigns' },
   { import = 'kickstart.plugins.lazygit' },
-  { import = 'kickstart.plugins.trouble' },
   { import = 'kickstart.plugins.lsp' },
   { import = 'kickstart.plugins.conform' },
   { import = 'kickstart.plugins.treesitter' },
@@ -69,6 +68,8 @@ require('lazy').setup({
       lazy = '💤 ',
     },
     border = 'rounded',
+    size = { width = 0.85, height = 0.85 },
+    wrap = true,
   },
   change_detection = {
     enabled = true,
