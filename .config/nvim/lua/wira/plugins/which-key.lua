@@ -1,11 +1,15 @@
-return { -- Useful plugin to show you pending keybinds.
+return {
   'folke/which-key.nvim',
   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
   opts = {
     delay = 0,
     icons = {
       mappings = vim.g.have_nerd_font,
+      separator = '  ',
+      padding = ' ',
+      color = { fg = '#ffffff', bg = '#000000' },
     },
+
     spec = {
       { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
       { '<leader>d', group = '[D]ocument' },

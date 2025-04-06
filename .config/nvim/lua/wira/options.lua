@@ -12,8 +12,11 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
-vim.opt.wrap = false
-
+vim.opt.wrap = true -- enable line wrap
+vim.opt.linebreak = true -- break lines at word boundaries
+vim.opt.showbreak = ' ' -- symbol at start of wrapped lines
+vim.opt.breakindent = true -- indent wrapped lines
+vim.opt.breakindentopt = 'shift:2' -- optional: extra visual indent
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'

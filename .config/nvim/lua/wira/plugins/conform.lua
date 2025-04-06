@@ -2,20 +2,22 @@ return {
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
   cmd = { 'ConformInfo' },
+  dependencies = {
+    'mason.nvim',
+  },
   keys = {
     {
       '<leader>f',
       function()
         require('conform').format { async = true, lsp_format = 'fallback' }
       end,
-      mode = '',
-      desc = '[F]ormat buffer',
+      desc = 'Format buffer',
     },
   },
   opts = {
     notify_on_error = false,
     format_on_save = function(bufnr)
-      local disable_filetypes = { c = true, cpp = true }
+      local disable_filetypes = {}
       if disable_filetypes[vim.bo[bufnr].filetype] then
         return nil
       else
@@ -25,19 +27,24 @@ return {
         }
       end
     end,
+    default_format_opts = {
+      timeout_ms = 3000,
+      async = true, -- not recommended to change
+      quiet = true, -- not recommended to change
+      lsp_format = 'fallback', -- not recommended to change
+    },
     formatters_by_ft = {
-      ['markdown'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
-      ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
       lua = { 'stylua' },
-      javascript = { 'prettier', stop_after_first = true },
-      typescript = { 'prettier', stop_after_first = true },
-      typescriptreact = { 'prettier', stop_after_first = true },
+      javascript = { 'prettier' },
+      javascriptreact = { 'prettier' },
+      typescript = { 'prettier' },
+      typescriptreact = { 'prettier' },
       go = { 'gofmt', 'goimports' },
-      html = { 'prettier', stop_after_first = true },
-      css = { 'prettier', stop_after_first = true },
-      scss = { 'prettier', stop_after_first = true },
-      json = { 'prettier', stop_after_first = true },
-      yaml = { 'prettier', stop_after_first = true },
+      html = { 'prettier' },
+      css = { 'prettier' },
+      scss = { 'prettier' },
+      json = { 'prettier' },
+      yaml = { 'prettier' },
     },
   },
 }

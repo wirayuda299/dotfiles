@@ -1,33 +1,15 @@
 local keymap = vim.keymap.set
-vim.keymap.set('n', '<C-n>', function()
-  local netrw_win = nil
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    local ok, ft = pcall(vim.api.nvim_buf_get_option, buf, 'filetype')
-    if ok and ft == 'netrw' then
-      netrw_win = win
-      break
-    end
-  end
 
-  if netrw_win then
-    vim.api.nvim_win_close(netrw_win, true)
-  else
-    vim.cmd 'Lexplore'
-    vim.cmd 'lcd %:p:h' -- Set working directory to the opened folder
-  end
-end, { desc = 'Toggle Netrw' })
+keymap('n', '<C-n>', vim.cmd.Ex)
 
 --move up/down
 keymap({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
 keymap({ 'n', 'x' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { desc = 'Up', expr = true, silent = true })
 keymap('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
-keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = 'Find Buffers' })
-
 --search
 keymap('n', '<leader>sr', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 keymap('n', '<leader>sc', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left>]])
+keymap('n', '<leader>r', ':%s///g<Left><Left><Left>', { desc = 'Fast replace' })
 
 -- focus
 keymap('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -58,10 +40,6 @@ keymap('n', '<C-c>', '"+yy', { desc = 'Copy current line to system clipboard' })
 keymap('v', '<C-c>', '"+y', { desc = 'Copy to system clipboard' })
 keymap('n', '<C-P>', '"+p', { desc = 'Paste from system clipboard' })
 
---obsidian
-keymap('n', '<leader>oq', ':ObsidianQuickSwitch<CR>', { noremap = true, silent = true })
-keymap('n', '<leader>on', ':ObsidianNew ', { noremap = true, silent = false, desc = 'Create New Obsidian Note' })
-
 --move lines up/down
 keymap({ 'n', 'v' }, '<A-k>', '<cmd>m .-2<cr>==', { desc = 'Move line up' })
 keymap({ 'n', 'v' }, '<A-j>', '<cmd>m .+1<cr>==', { desc = 'Move line down' })
@@ -75,7 +53,6 @@ keymap('n', '<S-Up>', 'V<Up>', { desc = 'Select up' })
 keymap('n', '<S-Down>', 'V<Down>', { desc = 'Select down' })
 keymap('n', '<S-Left>', 'V<Left>', { desc = 'Select left' })
 keymap('n', '<S-Right>', 'V<Right>', { desc = 'Select right' })
-vim.keymap.set('n', '<leader>r', ':%s///g<Left><Left><Left>', { desc = 'Fast replace' })
 
 -- select with shift + arrow keys in visual mode
 keymap('v', '<S-Up>', 'V<Up>', { desc = 'Select up' })
@@ -105,12 +82,5 @@ keymap({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save File' 
 --add to quickfix list
 keymap('n', '<leader>a', '<cmd>cadd %<cr>', { desc = 'Add to Quickfix List' })
 
-keymap('n', '<leader>xq', function()
-  local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
-  if not success and err then
-    vim.notify(err, vim.log.levels.ERROR)
-  end
-end, { desc = 'Quickfix List' })
-
-keymap('n', '[q', vim.cmd.cprev, { desc = 'Previous Quickfix' })
-keymap('n', ']q', vim.cmd.cnext, { desc = 'Next Quickfix' })
+keymap('n', '<leader>p', vim.cmd.cprev, { desc = 'Previous Quickfix' })
+keymap('n', '<leader>n', vim.cmd.cnext, { desc = 'Next Quickfix' })

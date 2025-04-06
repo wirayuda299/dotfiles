@@ -5,7 +5,7 @@ require 'wira.lazy_init'
 
 local augroup = vim.api.nvim_create_augroup
 local WiraGroup = augroup('Wira', {})
-
+local keymap = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
 
 local highlight_yank = augroup('highlight_yank', {})
@@ -13,7 +13,7 @@ local highlight_yank = augroup('highlight_yank', {})
 autocmd('TextYankPost', {
   group = highlight_yank,
   callback = function()
-    (vim.hl or vim.highlight).on_yank()
+    (vim.highlight or vim.hl).on_yank()
   end,
 })
 
@@ -25,33 +25,36 @@ autocmd({ 'BufWritePre' }, {
 autocmd('LspAttach', {
   group = WiraGroup,
   callback = function(e)
-    local opts = { buffer = e.buf }
-    vim.keymap.set('n', 'gd', function()
-      vim.lsp.buf.definition()
-    end, opts)
-    vim.keymap.set('n', 'K', function()
-      vim.lsp.buf.hover()
-    end, opts)
-    vim.keymap.set('n', '<leader>ws', function()
-      vim.lsp.buf.workspace_symbol()
-    end, opts)
-    vim.keymap.set('n', '<leader>df', function()
-      vim.diagnostic.open_float()
-    end, opts)
-    vim.keymap.set('n', '<leader>ca', function()
-      vim.lsp.buf.code_action()
-    end, opts)
-    vim.keymap.set('n', '<leader>rn', function()
-      vim.lsp.buf.rename()
-    end, opts)
-    vim.keymap.set('i', '<C-h>', function()
-      vim.lsp.buf.signature_help()
-    end, opts)
-    vim.keymap.set('n', '[d', function()
-      vim.diagnostic.goto_next()
-    end, opts)
-    vim.keymap.set('n', ']d', function()
-      vim.diagnostic.goto_prev()
-    end, opts)
+    keymap('n', 'gd', function()
+      vim.lsp.buf.definition({reuse_win=true})
+    end, {desc = 'go to definition'})
+   
+    keymap('n', 'gr', function()
+      vim.lsp.buf.references({reuse_win=true})
+    end, {desc = 'go to references', nowait=true})
+    keymap('n', 'K', function()
+      vim.lsp.buf.hover({reuse_win=true})
+    end, {desc = 'hover'})
+    keymap('n', '<leader>ws', function()
+      vim.lsp.buf.workspace_symbol({reuse_win=true})
+    end, {desc = 'workspace symbol'})
+    keymap('n', '<leader>df', function()
+      vim.diagnostic.open_float({reuse_win=true})
+    end, {desc = 'open float'})
+    keymap('n', '<leader>ca', function()
+      vim.lsp.buf.code_action({reuse_win=true})
+    end, {desc = 'code action'})
+    keymap('n', '<leader>rn', function()
+      vim.lsp.buf.rename({reuse_win=true})
+    end, {desc = 'rename'})
+    keymap('i', '<C-h>', function()
+      vim.lsp.buf.signature_help({reuse_win=true})
+    end, {desc = 'signature help'})
+    keymap('n', '[d', function()
+      vim.diagnostic.goto_next({reuse_win=true})
+    end, {desc = 'next diagnostic'})
+    keymap('n', ']d', function()
+      vim.diagnostic.goto_prev({reuse_win=true})
+    end, {desc = 'previous diagnostic'})
   end,
 })
