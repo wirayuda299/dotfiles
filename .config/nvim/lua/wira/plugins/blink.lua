@@ -17,13 +17,21 @@ return {
       appearance = {
         nerd_font_variant = 'mono',
       },
-      completion = { documentation = { auto_show = false } },
-
-      sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      completion = {
+        documentation = { auto_show = false },
+        list = {
+          max_items = 50,
+        },
       },
 
-      fuzzy = { implementation = 'prefer_rust_with_warning' },
+      sources = {
+        default = { 'lsp', 'path', 'snippets' },
+      },
+
+      signature = { enabled = true },
+      fuzzy = {
+        implementation = 'prefer_rust',
+      },
     },
     opts_extend = { 'sources.default' },
   },

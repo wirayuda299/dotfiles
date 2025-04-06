@@ -1,17 +1,29 @@
 local keymap = vim.keymap.set
-
-local diagnostic_goto = function(next, severity)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    go { severity = severity }
+vim.keymap.set('n', '<C-n>', function()
+  local netrw_win = nil
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local ok, ft = pcall(vim.api.nvim_buf_get_option, buf, 'filetype')
+    if ok and ft == 'netrw' then
+      netrw_win = win
+      break
+    end
   end
-end
+
+  if netrw_win then
+    vim.api.nvim_win_close(netrw_win, true)
+  else
+    vim.cmd 'Lexplore'
+    vim.cmd 'lcd %:p:h' -- Set working directory to the opened folder
+  end
+end, { desc = 'Toggle Netrw' })
 
 --move up/down
 keymap({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
 keymap({ 'n', 'x' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { desc = 'Up', expr = true, silent = true })
 keymap('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = 'Find Buffers' })
 
 --search
 keymap('n', '<leader>sr', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
@@ -28,41 +40,27 @@ keymap('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height' 
 keymap('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Width' })
 keymap('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase Window Width' })
 
-vim.api.nvim_set_keymap('i', '<leader>cs', 'copilot#Suggest()', { expr = true, silent = true })
---tab
-keymap('n', '<leader>bd', '<cmd>bd<cr>', { desc = 'Delete buffer' })
+keymap('n', '<leader>bd', ':bp | bd #<CR>', { noremap = true, silent = true })
 keymap('n', '<S-Tab>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
+keymap('n', '<BS>', '<C-^>', { noremap = true, silent = true })
+
 keymap('n', '<Tab>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
 keymap('n', '<leader>bo', '<cmd>%bd|e#|bd#<cr>', { desc = 'Close all buffers except current' })
 keymap('n', '<leader>bc', '<cmd>:%bd!<cr>', { desc = 'Close all buffers' })
+-- Use H and L to switch between buffers (like moving between words)
+keymap('n', 'H', ':bp<CR>', { noremap = true, silent = true }) -- Previous buffer
+keymap('n', 'L', ':bn<CR>', { noremap = true, silent = true }) -- Next buffer
 
 --lazy
 keymap('n', '<leader>l', '<cmd>Lazy<cr>', { desc = 'Open Lazy' })
 
 keymap('n', '<C-c>', '"+yy', { desc = 'Copy current line to system clipboard' })
+keymap('v', '<C-c>', '"+y', { desc = 'Copy to system clipboard' })
+keymap('n', '<C-P>', '"+p', { desc = 'Paste from system clipboard' })
 
 --obsidian
 keymap('n', '<leader>oq', ':ObsidianQuickSwitch<CR>', { noremap = true, silent = true })
 keymap('n', '<leader>on', ':ObsidianNew ', { noremap = true, silent = false, desc = 'Create New Obsidian Note' })
-
-keymap('n', ']d', diagnostic_goto(true), { desc = 'Next [D]iagnostic' })
-keymap('n', '[d', diagnostic_goto(false), { desc = 'Previous [D]iagnostic' })
-
---go to next/prev errors
-keymap('n', ']e', diagnostic_goto(true, 'ERROR'), { desc = 'Next [E]rror' })
-keymap('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Previous [E]rror' })
-
---go to next/prev warnings
-keymap('n', ']w', diagnostic_goto(true, 'WARN'), { desc = 'Next [W]arning' })
-keymap('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Previous [W]arning' })
-
---go to next/prev hint_virtual_texts
-keymap('n', ']h', diagnostic_goto(true, 'HINT'), { desc = 'Next [H]int' })
-keymap('n', '[h', diagnostic_goto(false, 'HINT'), { desc = 'Previous [H]int' })
-
---go to next/prev information
-keymap('n', ']i', diagnostic_goto(true, 'INFO'), { desc = 'Next [I]nfo' })
-keymap('n', '[i', diagnostic_goto(false, 'INFO'), { desc = 'Previous [I]nfo' })
 
 --move lines up/down
 keymap({ 'n', 'v' }, '<A-k>', '<cmd>m .-2<cr>==', { desc = 'Move line up' })
@@ -77,6 +75,7 @@ keymap('n', '<S-Up>', 'V<Up>', { desc = 'Select up' })
 keymap('n', '<S-Down>', 'V<Down>', { desc = 'Select down' })
 keymap('n', '<S-Left>', 'V<Left>', { desc = 'Select left' })
 keymap('n', '<S-Right>', 'V<Right>', { desc = 'Select right' })
+vim.keymap.set('n', '<leader>r', ':%s///g<Left><Left><Left>', { desc = 'Fast replace' })
 
 -- select with shift + arrow keys in visual mode
 keymap('v', '<S-Up>', 'V<Up>', { desc = 'Select up' })
@@ -95,19 +94,16 @@ keymap('s', '<S-Up>', 'V<Up>', { desc = 'Select up' })
 keymap('s', '<S-Down>', 'V<Down>$', { desc = 'Select down' })
 keymap('s', '<S-Left>', 'V<Left>', { desc = 'Select left' })
 keymap('s', '<S-Right>', 'V<Right>', { desc = 'Select right' })
-
---nvimtree toggle
-keymap('n', '<C-n>', '<cmd>NvimTreeToggle<cr>', { desc = 'Toggle NvimTree' })
+vim.keymap.set('n', 'mm', 'mM', { desc = 'Mark file' })
+vim.keymap.set('n', 'M', '`M', { desc = 'Jump to marked file' })
 
 --select all
 keymap('n', '<C-a>', 'gg<S-v>G', { desc = 'Select all' })
 keymap('i', '<C-a>', '<Esc>gg<S-v>G', { desc = 'Select all' })
 
---save file
 keymap({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save File' })
-
---reload
-keymap('n', '<leader>r', '<cmd>source %<cr>', { desc = 'Reload current file' })
+--add to quickfix list
+keymap('n', '<leader>a', '<cmd>cadd %<cr>', { desc = 'Add to Quickfix List' })
 
 keymap('n', '<leader>xq', function()
   local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
@@ -118,11 +114,3 @@ end, { desc = 'Quickfix List' })
 
 keymap('n', '[q', vim.cmd.cprev, { desc = 'Previous Quickfix' })
 keymap('n', ']q', vim.cmd.cnext, { desc = 'Next Quickfix' })
-
-vim.keymap.set('n', '.', function()
-  require('grug-far').sync()
-end, { desc = 'Sync Current Search (grug-far)' })
-
-vim.keymap.set('n', '..', function()
-  require('grug-far').sync { all = true }
-end, { desc = 'Sync All Changes (grug-far)' })

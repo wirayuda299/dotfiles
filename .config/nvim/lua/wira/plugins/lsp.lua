@@ -5,13 +5,13 @@ return {
     dependencies = {
       'williamboman/mason.nvim',
       'saghen/blink.cmp',
-      { 'williamboman/mason-lspconfig.nvim', config = function() end },
+      'williamboman/mason-lspconfig.nvim',
     },
     opts = function()
-      local ret = {
+      local ret = { -- ✅ Define `ret`
         diagnostics = {
           underline = true,
-          update_in_insert = true,
+          update_in_insert = false,
           virtual_text = {
             spacing = 4,
             source = 'if_many',
@@ -29,28 +29,6 @@ return {
         },
         capabilities = require('blink.cmp').get_lsp_capabilities(),
         servers = {
-          rust_analyzer = {
-
-            cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
-            filetypes = { 'rust' },
-            init_options = {
-              checkOnSave = {
-                command = 'clippy',
-                extraArgs = { '--target-dir', '/tmp/rust-analyzer' },
-              },
-            },
-            settings = {
-              ['rust-analyzer'] = {
-                cargo = {
-                  allFeatures = true,
-                  loadOutDirsFromCheck = true,
-                },
-                procMacro = {
-                  enable = true,
-                },
-              },
-            },
-          },
           ts_ls = {
             init_options = {
               hostInfo = 'neovim',
@@ -62,23 +40,6 @@ return {
                 allowIncompleteCompletions = true,
               },
             },
-            settings = {
-              typescript = {
-                format = {
-                  enable = true,
-                  insertSpaceAfterCommaDelimiter = true,
-                  insertSpaceAfterConstructor = true,
-                  insertSpaceAfterSemicolonInForStatements = true,
-                  insertSpaceBeforeAndAfterBinaryOperators = true,
-                  insertSpaceAfterKeywordsInControlFlowStatements = true,
-                  insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
-                  insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
-                  insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = true,
-                  insertSpaceAfterOpeningAndBeforeClosingEmptyBrackets = false,
-                  insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = false,
-                },
-              },
-            },
             filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
             root_dir = function(fname)
               return require('lspconfig.util').root_pattern('package.json', 'tsconfig.json', 'jsconfig.json')(fname)
@@ -88,6 +49,10 @@ return {
               client.server_capabilities.document_formatting = false
               client.server_capabilities.document_range_formatting = false
             end,
+          },
+          tailwindcss = {
+            filetypes_exclude = { 'markdown' },
+            filetypes_include = {},
           },
           gopls = {
             cmd = { 'gopls', 'serve' },
@@ -101,7 +66,7 @@ return {
               gopls = {
                 gofumpt = true,
                 codelenses = {
-                  gc_details = true,
+                  gc_details = false,
                   generate = true,
                   regenerate_cgo = true,
                   run_govulncheck = true,
@@ -174,8 +139,44 @@ return {
       }
       return ret
     end,
+
     config = function(_, opts)
+      require('mason').setup {
+
+        opts = {
+          ensure_installed = {
+            'stylua',
+            'shfmt',
+            'gopls',
+            'goimports',
+            'gofumpt',
+            'gomodifytags',
+            'impl',
+            'delve',
+            'typescript-language-server',
+            'tailwindcss-language-server',
+          },
+        },
+        config = function(_, opts)
+          require('mason').setup(opts)
+          local mr = require 'mason-registry'
+          mr.refresh(function()
+            for _, tool in ipairs(opts.ensure_installed) do
+              local p = mr.get_package(tool)
+              if not p:is_installed() then
+                p:install()
+              end
+            end
+          end)
+        end,
+      }
+      require('mason-lspconfig').setup {
+        ensure_installed = { 'lua_ls', 'gopls', 'tailwindcss', 'ts_ls' },
+      }
+
       vim.diagnostic.config(opts.diagnostics)
+
+      -- Set up LSP servers
       local lspconfig = require 'lspconfig'
       for server, config in pairs(opts.servers) do
         lspconfig[server].setup(config)
