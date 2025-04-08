@@ -8,7 +8,7 @@ return {
       'williamboman/mason-lspconfig.nvim',
     },
     opts = function()
-      local ret = { -- ✅ Define `ret`
+      local ret = {
         diagnostics = {
           underline = true,
           update_in_insert = false,
@@ -29,6 +29,13 @@ return {
         },
         capabilities = require('blink.cmp').get_lsp_capabilities(),
         servers = {
+          svelte = {
+            capabilities = {
+              workspace = {
+                didChangeWatchedFiles = vim.fn.has 'nvim-0.10' == 0 and { dynamicRegistration = true },
+              },
+            },
+          },
           ts_ls = {
             init_options = {
               hostInfo = 'neovim',
@@ -88,7 +95,7 @@ return {
                   unusedparams = true,
                   shadow = true,
                 },
-                usePlaceholders = true,
+                usePlaceholders = false,
                 completeUnimported = true,
                 directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
                 semanticTokens = true,

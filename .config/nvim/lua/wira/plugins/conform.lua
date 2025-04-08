@@ -45,6 +45,7 @@ return {
       scss = { 'prettier' },
       json = { 'prettier' },
       yaml = { 'prettier' },
+      svelte = { 'prettier' },
     },
   },
 }

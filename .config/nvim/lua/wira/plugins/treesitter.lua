@@ -11,6 +11,8 @@ return {
           'lua',
           'jsdoc',
           'bash',
+          'svelte',
+          'go',
         },
 
         sync_install = false,

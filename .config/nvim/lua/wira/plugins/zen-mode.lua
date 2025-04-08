@@ -5,7 +5,8 @@ return {
       'folke/twilight.nvim',
     },
     config = function()
-      vim.keymap.set('n', '<leader>zZ', function()
+      local keymap = require 'utils.keymaps'
+      keymap.safe_keymap('n', '<leader>zZ', function()
         require('zen-mode').setup {
           window = {
             width = 120,
