@@ -1,4 +1,1 @@
-### My dotfiles
-
-
-arch
+##My dotfiles
