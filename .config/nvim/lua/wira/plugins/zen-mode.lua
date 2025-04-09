@@ -32,12 +32,12 @@ return {
     end,
   },
   {
-
-    -- Lua
     'folke/twilight.nvim',
     opts = {
       dimming = {
         alpha = 0.50,
+        inactive = true,
+        active = true,
       },
       context = 10,
     },

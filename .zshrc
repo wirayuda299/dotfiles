@@ -68,7 +68,7 @@ alias ht="htop > /dev/null 2>&1 & disown"
 alias br="brave > /dev/null 2>&1 & disown"
 alias db="dbeaver > /dev/null 2>&1 & disown"
 alias api="insomnia > /dev/null 2>&1 & disown"
-
+alias ch="google-chrome-stable > /dev/null 2>&1 & disown"
 
 # History
 HISTSIZE=5000
