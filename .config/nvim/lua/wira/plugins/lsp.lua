@@ -1,42 +1,130 @@
-return {
-  {
-    'neovim/nvim-lspconfig',
-    event = 'BufReadPre',
-    dependencies = {
-      'williamboman/mason.nvim',
-      'saghen/blink.cmp',
-      'williamboman/mason-lspconfig.nvim',
+local ensure_tools = {
+  'stylua',
+  'shfmt',
+  'gopls',
+  'goimports',
+  'gofumpt',
+  'gomodifytags',
+  'impl',
+  'delve',
+  'typescript-language-server',
+  'tailwindcss-language-server',
+  'svelte-language-server',
+  'astro-language-server',
+  'harper-ls',
+}
+
+local lsp_ui_config = {
+  diagnostics = {
+    underline = true,
+    update_in_insert = false,
+    virtual_text = {
+      spacing = 4,
+      source = 'if_many',
+      prefix = '●',
     },
-    opts = function()
-      local ret = {
-        diagnostics = {
-          underline = true,
-          update_in_insert = false,
-          virtual_text = {
-            spacing = 4,
-            source = 'if_many',
-            prefix = '●',
-          },
-          severity_sort = true,
-          signs = true,
-        },
-        inlay_hints = {
-          enabled = false,
-          exclude = { 'vue' },
-        },
-        codelens = {
-          enabled = false,
-        },
-        capabilities = require('blink.cmp').get_lsp_capabilities(),
-        servers = {
-          svelte = {
-            capabilities = {
-              workspace = {
-                didChangeWatchedFiles = vim.fn.has 'nvim-0.10' == 0 and { dynamicRegistration = true },
+    severity_sort = true,
+    signs = true,
+  },
+  inlay_hints = {
+    enabled = false,
+    exclude = { 'vue' },
+  },
+  codelens = {
+    enabled = false,
+  },
+}
+
+return {
+  'neovim/nvim-lspconfig',
+  dependencies = {
+    'williamboman/mason.nvim',
+    'saghen/blink.cmp',
+    'williamboman/mason-lspconfig.nvim',
+  },
+
+  build = function()
+    local mr = require 'mason-registry'
+    mr.refresh(function()
+      for _, tool in ipairs(ensure_tools) do
+        local ok, p = pcall(mr.get_package, tool)
+        if ok and not p:is_installed() then
+          p:install()
+        end
+      end
+    end)
+  end,
+
+  config = function()
+    vim.diagnostic.config(lsp_ui_config.diagnostics)
+
+    local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+    local on_attach = function(client, bufnr)
+      if not lsp_ui_config.codelens.enabled then
+        client.server_capabilities.codeLensProvider = false
+      end
+
+      local ft = vim.bo[bufnr].filetype
+      if not lsp_ui_config.inlay_hints.enabled or vim.tbl_contains(lsp_ui_config.inlay_hints.exclude, ft) then
+        client.server_capabilities.inlayHintProvider = false
+      end
+    end
+
+    require('mason').setup()
+
+    require('mason-lspconfig').setup {
+      ensure_installed = {
+        'lua_ls',
+        'ts_ls',
+        'gopls',
+      },
+      handlers = {
+        function(server_name)
+          require('lspconfig')[server_name].setup {
+            capabilities = capabilities,
+            on_attach = on_attach,
+          }
+        end,
+        ['harper_ls'] = function()
+          require('lspconfig').harper_ls.setup {
+            settings = {
+              ['harper-ls'] = {
+                userDictPath = '',
+                fileDictPath = '',
+                filetypes = { 'markdown', 'text', 'gitcommit', 'javascript', 'typescript', 'typescriptreact', 'svelte', 'astro' },
+
+                linters = {
+                  SpellCheck = true,
+                  SpelledNumbers = false,
+                  AnA = true,
+                  SentenceCapitalization = true,
+                  UnclosedQuotes = true,
+                  WrongQuotes = false,
+                  LongSentences = true,
+                  RepeatedWords = true,
+                  Spaces = true,
+                  Matcher = true,
+                  CorrectNumberSuffix = true,
+                },
+                codeActions = {
+                  ForceStable = false,
+                },
+                markdown = {
+                  IgnoreLinkTitle = false,
+                },
+                diagnosticSeverity = 'hint',
+                isolateEnglish = false,
+                dialect = 'American',
               },
             },
-          },
-          ts_ls = {
+          }
+        end,
+
+        ['ts_ls'] = function()
+          require('lspconfig').ts_ls.setup {
+            capabilities = capabilities,
+            on_attach = on_attach,
             init_options = {
               hostInfo = 'neovim',
               preferences = {
@@ -47,21 +135,40 @@ return {
                 allowIncompleteCompletions = true,
               },
             },
-            filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+            filetypes = {
+              'javascript',
+              'javascriptreact',
+              'typescript',
+              'typescriptreact',
+            },
             root_dir = function(fname)
               return require('lspconfig.util').root_pattern('package.json', 'tsconfig.json', 'jsconfig.json')(fname)
-                or require('lspconfig.util').vim.fs.dirname(fname)
+                or require('lspconfig.util').find_git_ancestor(fname)
             end,
-            on_attach = function(client, bufnr)
-              client.server_capabilities.document_formatting = false
-              client.server_capabilities.document_range_formatting = false
-            end,
-          },
-          tailwindcss = {
-            filetypes_exclude = { 'markdown' },
-            filetypes_include = {},
-          },
-          gopls = {
+          }
+        end,
+
+        ['tailwindcss'] = function()
+          require('lspconfig').tailwindcss.setup {
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = {
+              'html',
+              'css',
+              'javascript',
+              'javascriptreact',
+              'typescript',
+              'typescriptreact',
+              'svelte',
+              'astro',
+            },
+          }
+        end,
+
+        ['gopls'] = function()
+          require('lspconfig').gopls.setup {
+            capabilities = capabilities,
+            on_attach = on_attach,
             cmd = { 'gopls', 'serve' },
             filetypes = { 'go', 'gomod' },
             init_options = {
@@ -97,97 +204,32 @@ return {
                 },
                 usePlaceholders = false,
                 completeUnimported = true,
-                directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
+                directoryFilters = { '-.git', '-.vscode', '-.idea', '-node_modules' },
                 semanticTokens = true,
                 staticcheck = true,
               },
             },
-            on_attach = function(client, bufnr)
-              if not client.server_capabilities.semanticTokensProvider then
-                local semantic = client.config.capabilities.textDocument.semanticTokens
-                client.server_capabilities.semanticTokensProvider = {
-                  full = true,
-                  legend = {
-                    tokenTypes = semantic.tokenTypes,
-                    tokenModifiers = semantic.tokenModifiers,
-                  },
-                  range = true,
-                }
-              end
-            end,
-          },
-          lua_ls = {
+          }
+        end,
+
+        ['lua_ls'] = function()
+          require('lspconfig').lua_ls.setup {
+            capabilities = capabilities,
+            on_attach = on_attach,
             settings = {
               Lua = {
-                workspace = {
-                  checkThirdParty = false,
-                },
-                codeLens = {
+                format = {
                   enable = true,
-                },
-                completion = {
-                  callSnippet = 'Replace',
-                },
-                doc = {
-                  privateName = { '^_' },
-                },
-                hint = {
-                  enable = true,
-                  setType = false,
-                  paramType = true,
-                  paramName = 'Disable',
-                  semicolon = 'Disable',
-                  arrayIndex = 'Disable',
+                  defaultConfig = {
+                    indent_style = 'space',
+                    indent_size = '2',
+                  },
                 },
               },
             },
-          },
-        },
-      }
-      return ret
-    end,
-
-    config = function(_, opts)
-      require('mason').setup {
-
-        opts = {
-          ensure_installed = {
-            'stylua',
-            'shfmt',
-            'gopls',
-            'goimports',
-            'gofumpt',
-            'gomodifytags',
-            'impl',
-            'delve',
-            'typescript-language-server',
-            'tailwindcss-language-server',
-          },
-        },
-        config = function(_, opts)
-          require('mason').setup(opts)
-          local mr = require 'mason-registry'
-          mr.refresh(function()
-            for _, tool in ipairs(opts.ensure_installed) do
-              local p = mr.get_package(tool)
-              if not p:is_installed() then
-                p:install()
-              end
-            end
-          end)
+          }
         end,
-      }
-      require('mason-lspconfig').setup {
-        ensure_installed = { 'lua_ls', 'gopls', 'tailwindcss', 'ts_ls' },
-      }
-
-      vim.diagnostic.config(opts.diagnostics)
-
-      -- Set up LSP servers
-      local lspconfig = require 'lspconfig'
-      for server, config in pairs(opts.servers) do
-        lspconfig[server].setup(config)
-      end
-    end,
-  },
+      },
+    }
+  end,
 }

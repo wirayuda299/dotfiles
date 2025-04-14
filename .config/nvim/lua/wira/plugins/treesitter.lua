@@ -13,6 +13,9 @@ return {
           'bash',
           'svelte',
           'go',
+          'svelte',
+          'astro',
+          'css',
         },
 
         sync_install = false,

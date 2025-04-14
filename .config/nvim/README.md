@@ -1,11 +1,3 @@
-### My neovim config
-this is my neovim config
-
-
-
-
-
-
-
-
+### My Neovim config
+this is my Neovim config
 

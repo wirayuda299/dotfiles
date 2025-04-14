@@ -5,6 +5,7 @@ return {
   config = function()
     require('telescope').setup {
       defaults = {
+        -- File ignore patterns
         file_ignore_patterns = {
           'node_modules',
           'dist',
@@ -20,15 +21,31 @@ return {
           '.gitignore',
           '.next',
         },
-
+        -- Previewers
         file_previewer = require('telescope.previewers').vim_buffer_cat.new,
         grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
         qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
+        -- Other defaults
+        sorting_strategy = 'ascending',
+        layout_config = {
+          horizontal = {
+            prompt_position = 'top',
+            preview_width = 0.5,
+          },
+          vertical = {
+            mirror = false,
+          },
+          width = 0.8,
+          height = 0.8,
+        },
       },
-
       pickers = {
         find_files = {
           hidden = true,
+          find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/*' },
+        },
+        live_grep = {
+          additional_args = { '--hidden' },
         },
       },
     }
@@ -36,6 +53,7 @@ return {
     local builtin = require 'telescope.builtin'
     local keymap = require 'utils.keymaps'
 
+    -- Keymaps
     keymap.safe_keymap('n', '<C-p>', builtin.find_files, { desc = 'Find files' })
     keymap.safe_keymap('n', '<C-g>', builtin.git_files, { desc = 'Find git files' })
     keymap.safe_keymap('n', '<A-f>', function()

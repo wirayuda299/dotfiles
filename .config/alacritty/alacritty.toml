@@ -89,6 +89,7 @@ semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 program = "/bin/zsh"
 
 [window]
+opacity= 0.0
 decorations = "none"
 dynamic_title = true
 startup_mode = "Fullscreen"
