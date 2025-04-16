@@ -41,6 +41,7 @@ return {
     'williamboman/mason.nvim',
     'saghen/blink.cmp',
     'williamboman/mason-lspconfig.nvim',
+    'j-hui/fidget.nvim',
   },
 
   build = function()
@@ -72,7 +73,7 @@ return {
     end
 
     require('mason').setup()
-
+    require('fidget').setup {}
     require('mason-lspconfig').setup {
       ensure_installed = {
         'lua_ls',

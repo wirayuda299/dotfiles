@@ -16,7 +16,6 @@ autocmd('TextYankPost', {
     (vim.highlight or vim.hl).on_yank()
   end,
 })
-
 autocmd({ 'BufWritePre' }, {
   group = WiraGroup,
   pattern = '*',
