@@ -53,7 +53,6 @@ return {
     local builtin = require 'telescope.builtin'
     local keymap = require 'utils.keymaps'
 
-    -- Keymaps
     keymap.safe_keymap('n', '<C-p>', builtin.find_files, { desc = 'Find files' })
     keymap.safe_keymap('n', '<C-g>', builtin.git_files, { desc = 'Find git files' })
     keymap.safe_keymap('n', '<A-f>', function()
@@ -65,8 +64,8 @@ return {
     end)
 
     keymap.safe_keymap('n', '<leader>fb', '<cmd>Telescope buffers sort_mru=true sort_lastused=true ignore_current_buffer=true<cr>', { desc = 'Find Buffers' })
-    keymap.safe_keymap('n', '<leader>sd', '<cmd>Telescope diagnostics<cr>', { desc = 'Workspace Diagnostics' })
-    keymap.safe_keymap('n', '<leader>sD', '<cmd>Telescope diagnostics bufnr=0<cr>', { desc = 'Document Diagnostics' })
+    keymap.safe_keymap('n', '<leader>wd', '<cmd>Telescope diagnostics<cr>', { desc = 'Workspace Diagnostics' })
+    keymap.safe_keymap('n', '<leader>dd', '<cmd>Telescope diagnostics bufnr=0<cr>', { desc = 'Document Diagnostics' })
     keymap.safe_keymap('n', '<leader>q', '<cmd>Telescope quickfix<cr>', { desc = 'Quickfix List' })
   end,
 }

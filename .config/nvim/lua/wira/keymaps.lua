@@ -41,3 +41,7 @@ k.safe_keymap('n', '<leader>a', '<cmd>cadd %<cr>', { desc = 'Add to Quickfix Lis
 k.safe_keymap('n', '<leader>p', vim.cmd.cprev, { desc = 'Previous Quickfix' })
 k.safe_keymap('n', '<leader>n', vim.cmd.cnext, { desc = 'Next Quickfix' })
 k.safe_keymap('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
+k.safe_keymap("n", "<leader>cg", "<cmd>CMakeGenerate<cr>", { desc = "CMake Generate" })
+k.safe_keymap("n", "<leader>cb", "<cmd>CMakeBuild<cr>", { desc = "CMake Build" })
+k.safe_keymap("n", "<leader>cr", "<cmd>CMakeRun<cr>", { desc = "CMake Run" })
+
