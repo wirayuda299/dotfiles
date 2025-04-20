@@ -17,11 +17,13 @@ autocmd('TextYankPost', {
     end,
 })
 
+
 autocmd({ 'BufWritePre' }, {
     group = WiraGroup,
     pattern = '*',
     command = [[%s/\s\+$//e]],
 })
+
 
 autocmd('LspAttach', {
     group = WiraGroup,

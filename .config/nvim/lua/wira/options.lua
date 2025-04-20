@@ -1,11 +1,21 @@
 vim.g.mapleader = ' '
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.opt.guicursor = {
-  'n-v-c:block', -- Normal, visual, command: block
-  'i-ci:ver25', -- Insert and Insert-command: vertical bar
-  'r-cr:hor20', -- Replace and Command Replace: underscore
-  'o:hor50', -- Operator-pending
-  'a:blinkon0', -- No blinking
+    'n-v-c:block',
+    'i-ci:ver25',
+    'r-cr:hor20',
+    'o:hor50',
+    'a:blinkon0',
 }
+vim.api.nvim_set_hl(0, "EndOfBuffer", { fg = "#000000", bg = "none" })
+vim.opt.fillchars:append({ eob = " " })
+vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", { fg = "#3b3b3b", bg = "none" })
+
+vim.api.nvim_set_hl(0, "NvimTreeFolderName", { fg = "#7aa2f7", bg = "none" })
+vim.api.nvim_set_hl(0, "NvimTreeRootFolder", { fg = "#bb9af7", bg = "none", bold = true })
+vim.api.nvim_set_hl(0, "NvimTreeIndentMarker", { fg = "#565f89", bg = "none" })
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
