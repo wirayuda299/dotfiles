@@ -18,7 +18,6 @@ local default_servers = {
   "cssls",
   "html",
   "jsonls",
-  "rust_analyzer",
   "cmake",
   "jdtls",
 }

@@ -52,11 +52,10 @@ autocmd("TextYankPost", {
   end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
+autocmd("LspAttach", {
   group = WiraGroup,
   callback = function(e)
-    local bufnr = e.buf
-    local opts = { buffer = bufnr }
+    local opts = { buffer = e.buf }
 
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
@@ -72,11 +71,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 autocmd("LspDetach", {
   group = augroup("kickstart-lsp-detach", { clear = true }),
-  callback = function(event)
+  callback = function(e)
     vim.lsp.buf.clear_references()
     vim.api.nvim_clear_autocmds {
       group = WiraGroup,
-      buffer = event.buf,
+      buffer = e.buf,
     }
   end,
 })
