@@ -1,16 +1,20 @@
--- ~/.config/nvim/lua/custom/plugins.lua
 ---@type NvPluginSpec[]
 local plugins = {
   {
     "hrsh7th/nvim-cmp",
     opts = function(_, opts)
       local cmp = require "cmp"
-      -- merge default opts dengan custom mapping
       local custom = {
         mapping = {
-          ["<Up>"] = cmp.mapping.select_prev_item(),
-          ["<Down>"] = cmp.mapping.select_next_item(),
-          ["<Tab>"] = cmp.mapping.confirm { select = true },
+          ["<CR>"] = cmp.mapping.confirm { select = true }, -- enter buat confirm pilihan
+          ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
+          ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
+        },
+        sources = cmp.config.sources {
+          { name = "nvim_lsp", priority = 1000 },
+          { name = "luasnip", priority = 750 },
+          { name = "buffer", priority = 500 },
+          { name = "async_path", priority = 250 }, -- For luasnip users.
         },
       }
       return vim.tbl_deep_extend("force", opts, custom)

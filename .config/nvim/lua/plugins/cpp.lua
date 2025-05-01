@@ -1,54 +1,49 @@
+---@type NvPluginSpec[]
 return {
   {
-    'Civitasv/cmake-tools.nvim',
+    "Civitasv/cmake-tools.nvim",
+    name = "cmake-tools.nvim",
     lazy = true,
     init = function()
-      local loaded = false
-      local function check()
-        local cwd = vim.uv.cwd()
-        if vim.fn.filereadable(cwd .. '/CMakeLists.txt') == 1 then
-          require('lazy').load { plugins = { 'cmake-tools.nvim' } }
-          loaded = true
+      local function try_load()
+        if vim.fn.filereadable(vim.fn.getcwd() .. "/CMakeLists.txt") == 1 then
+          require("lazy").load { plugins = { "cmake-tools.nvim" } }
         end
       end
-      check()
-      vim.api.nvim_create_autocmd('DirChanged', {
-        callback = function()
-          if not loaded then
-            check()
-          end
-        end,
+      try_load()
+      vim.api.nvim_create_autocmd({ "DirChanged", "BufReadPost" }, {
+        pattern = "*",
+        callback = try_load,
       })
     end,
-    opts = {},
+    opts = {}, -- lazy.nvim bakal auto-setup(opts)
   },
   {
-    'p00f/clangd_extensions.nvim',
+    "p00f/clangd_extensions.nvim",
     lazy = true,
-    config = function() end,
+    ft = { "c", "cpp", "objc", "objcpp" },
     opts = {
-      inlay_hints = {
-        inline = false,
-      },
+      inlay_hints = { inline = false },
       ast = {
         role_icons = {
-          type = '',
-          declaration = '',
-          expression = '',
-          specifier = '',
-          statement = '',
-          ['template argument'] = '',
+          type = "",
+          declaration = "",
+          expression = "",
+          specifier = "",
+          statement = "",
+          ["template argument"] = "",
         },
         kind_icons = {
-          Compound = '',
-          Recovery = '',
-          TranslationUnit = '',
-          PackExpansion = '',
-          TemplateTypeParm = '',
-          TemplateTemplateParm = '',
-          TemplateParamObject = '',
+          Compound = "",
+          Recovery = "",
+          TranslationUnit = "",
+          PackExpansion = "",
+          TemplateTypeParm = "",
+          TemplateTemplateParm = "",
+          TemplateParamObject = "",
         },
       },
     },
+    -- no `config` needed, lazy.nvim otomatis manggil setup(opts)
   },
 }

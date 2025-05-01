@@ -13,12 +13,11 @@ vim.opt.rtp:prepend(lazypath)
 local lazy_config = require "configs.lazy"
 
 vim.diagnostic.config {
-  -- update_in_insert = true,
   float = {
     focusable = false,
     style = "minimal",
     border = "rounded",
-    source = "always",
+    source = true,
     header = "",
     prefix = "",
   },
@@ -56,7 +55,6 @@ autocmd("LspAttach", {
   group = WiraGroup,
   callback = function(e)
     local opts = { buffer = e.buf }
-
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
@@ -65,6 +63,7 @@ autocmd("LspAttach", {
     vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, opts)
     vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
     vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
     vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
   end,
 })

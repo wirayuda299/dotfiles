@@ -3,13 +3,10 @@ local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 local lspconfig = require "lspconfig"
 
-lspconfig.servers = {
-  "lua_ls",
-}
-
 local default_servers = {
   "lua_ls",
   "clangd",
+  "lua_ls",
   "gopls",
   "ts_ls",
   "tailwindcss",

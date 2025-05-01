@@ -2,10 +2,12 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
+--accept copilot suggestion
+
+map("n", "<leader>tr", "<cmd> RenderMarkdown toggle<CR>", { desc = "Toggle Rendering markdown" })
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
-
-map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 map("n", "<leader>srr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search & replace" })
 map(
   "n",
