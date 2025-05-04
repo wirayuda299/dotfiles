@@ -1,24 +1,39 @@
----@type NvPluginSpec[]
-local plugins = {
-  {
-    "hrsh7th/nvim-cmp",
-    opts = function(_, opts)
-      local cmp = require "cmp"
-      local custom = {
-        mapping = {
-          ["<CR>"] = cmp.mapping.confirm { select = true }, -- enter buat confirm pilihan
-          ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
-          ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
-        },
-        sources = cmp.config.sources {
-          { name = "nvim_lsp", priority = 1000 },
-          { name = "luasnip", priority = 750 },
-          { name = "buffer", priority = 500 },
-          { name = "async_path", priority = 250 }, -- For luasnip users.
-        },
-      }
-      return vim.tbl_deep_extend("force", opts, custom)
-    end,
-  },
+return {
+	"hrsh7th/nvim-cmp",
+	event = "InsertEnter",
+	dependencies = {
+		{
+			"L3MON4D3/LuaSnip",
+			dependencies = "rafamadriz/friendly-snippets",
+			opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+		},
+
+		{
+			"windwp/nvim-autopairs",
+			opts = {
+				fast_wrap = {},
+				disable_filetype = { "TelescopePrompt", "vim" },
+			},
+			config = function(_, opts)
+				require("nvim-autopairs").setup(opts)
+
+				local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+				require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+			end,
+		},
+
+		{
+			"saadparwaiz1/cmp_luasnip",
+			"hrsh7th/cmp-nvim-lua",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"https://codeberg.org/FelipeLema/cmp-async-path.git",
+		},
+	},
+	opts = function()
+		return require("plugins.configs.cmp")
+	end,
+	config = function(_, opts)
+		require("cmp").setup(opts)
+	end,
 }
-return plugins

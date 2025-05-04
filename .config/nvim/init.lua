@@ -1,84 +1,113 @@
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+vim.lsp.set_log_level("warn")
+vim.g.lsp_utils_cache = true
+vim.g.lsp_document_highlight_cache = true
+vim.g.lsp_cache_dir = vim.fn.stdpath("cache") .. "/lsp"
+vim.fn.mkdir(vim.g.lsp_cache_dir, "p") -- Ensure cache directory exists
 
-if not vim.uv.fs_stat(lazypath) then
-  local repo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
+local start = vim.uv.hrtime()
+
+-- Random boolean
+local enable_loader = vim.uv.random(1):byte(1) % 2 == 1
+
+if enable_loader then
+	vim.loader.enable()
 end
 
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		local startuptime = (vim.uv.hrtime() - start) / 1e6
+
+		local logpath = vim.fs.joinpath(vim.env.HOME, ".nvim_startuptime.log")
+
+		local enabled_avg = 0
+		local disabled_avg = 0
+
+		local stats = {
+			enabled = {
+				avg = 0,
+				high = 0,
+				low = math.huge,
+				cnt = 0,
+			},
+			disabled = {
+				avg = 0,
+				high = 0,
+				low = math.huge,
+				cnt = 0,
+			},
+		}
+
+		local enabled_time = 0
+		local disabled_time = 0
+
+		if enable_loader then
+			enabled_time = enabled_time + startuptime
+		else
+			disabled_time = disabled_time + startuptime
+		end
+
+		-- Read log
+		if vim.uv.fs_stat(logpath) then
+			for line in io.lines(logpath) do
+				local state, time = line:match("%w+: Loader (.+), ([^ ]+)ms")
+				time = tonumber(time) --[[@as integer]]
+				if state == "enabled" then
+					stats.enabled.cnt = stats.enabled.cnt + 1
+					stats.enabled.high = math.max(stats.enabled.high, time)
+					stats.enabled.low = math.min(stats.enabled.low, time)
+					enabled_time = enabled_time + time
+				elseif state == "disabled" then
+					stats.disabled.cnt = stats.disabled.cnt + 1
+					stats.disabled.high = math.max(stats.disabled.high, time)
+					stats.disabled.low = math.min(stats.disabled.low, time)
+					disabled_time = disabled_time + time
+				else
+					error("invalid: " .. line)
+				end
+			end
+			stats.enabled.avg = enabled_time / stats.enabled.cnt
+			stats.disabled.avg = disabled_time / stats.disabled.cnt
+		end
+
+		-- update log
+		assert(io.open(logpath, "a+")):write(
+			("%s: %s, %sms, avg: %sms\n"):format(
+				os.date(),
+				enable_loader and "Loader enabled" or "Loader disabled",
+				startuptime,
+				enable_loader and enabled_avg or disabled_avg
+			)
+		)
+
+		vim.g.loader_stats = stats
+	end,
+})
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable",
+		lazypath,
+	})
+end
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = require "configs.lazy"
-
-vim.diagnostic.config {
-  float = {
-    focusable = false,
-    style = "minimal",
-    border = "rounded",
-    source = true,
-    header = "",
-    prefix = "",
-  },
-}
+local lazy_config = require("plugins.configs.lazy")
 
 require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
-  },
-
-  { import = "plugins" },
+	{ import = "plugins" },
 }, lazy_config)
 
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
-
-require "options"
-require "nvchad.autocmds"
-
-local augroup = vim.api.nvim_create_augroup
-local WiraGroup = augroup("Wira", {})
-local autocmd = vim.api.nvim_create_autocmd
-
-autocmd("TextYankPost", {
-  group = WiraGroup,
-  callback = function()
-    (vim.highlight or vim.hl).on_yank()
-  end,
-})
-
-autocmd("LspAttach", {
-  group = WiraGroup,
-  callback = function(e)
-    local opts = { buffer = e.buf }
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, opts)
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-
-    vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-  end,
-})
-
-autocmd("LspDetach", {
-  group = augroup("kickstart-lsp-detach", { clear = true }),
-  callback = function(e)
-    vim.lsp.buf.clear_references()
-    vim.api.nvim_clear_autocmds {
-      group = WiraGroup,
-      buffer = e.buf,
-    }
-  end,
-})
+require("options")
+require("autocmds")
 
 vim.schedule(function()
-  require "mappings"
+	require("mappings")
 end)
