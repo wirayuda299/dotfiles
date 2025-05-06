@@ -1,51 +1,52 @@
-local opt = vim.opt
-local o = vim.o
-local g = vim.g
-
-g.do_filetype_lua = 1
-g.did_load_filetypes = 0
-
-o.laststatus = 3
-o.showmode = false
-
-o.clipboard = "unnamedplus"
-o.cursorline = true
-o.cursorlineopt = "number"
+vim.opt.guicursor = ""
+vim.opt.mouse = "a"
+vim.opt.confirm = true
+vim.opt.cursorline = true
+vim.o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
+vim.opt.nu = true
+vim.opt.relativenumber = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.wrap = false
+vim.opt.laststatus = 3
+vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
+vim.opt.signcolumn = "yes"
+vim.opt.statuscolumn = ""
 vim.opt.linebreak = true
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+vim.opt.termguicolors = true
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+vim.opt.isfname:append("@-@")
+vim.opt.updatetime = 50
+vim.opt.clipboard = "unnamedplus"
+vim.opt.fillchars = {
+    foldopen = "",
+    foldclose = "",
+    fold = " ",
+    foldsep = " ",
+    diff = "╱",
+    eob = " ",
+}
+vim.g.markdown_recommended_style = 0
 
--- Indenting
-o.expandtab = true
-o.shiftwidth = 3
-o.smartindent = true
-o.tabstop = 3
-o.softtabstop = 3
 
-opt.fillchars = { eob = " " }
-o.ignorecase = true
-o.smartcase = true
-o.mouse = "a"
+-- Add this to your init.lua
+vim.opt.statusline = [[ %{%v:lua.get_recording_status()%} %f %m %r %=%l,%c %P ]]
 
--- Numbers
-o.number = true
-o.numberwidth = 2
-o.relativenumber = true
-o.ruler = false
-
--- disable nvim intro
-opt.shortmess:append("sI")
-
-o.signcolumn = "yes"
-o.splitbelow = true
-o.splitright = true
-o.timeoutlen = 400
-o.undofile = true
-o.updatetime = 500
-opt.whichwrap:append("<>[]hl")
-g.loaded_node_provider = 0
-g.loaded_python3_provider = 0
-g.loaded_perl_provider = 0
-g.loaded_ruby_provider = 0
-local is_windows = vim.fn.has("win32") ~= 0
-local sep = is_windows and "\\" or "/"
-local delim = is_windows and ";" or ":"
-vim.env.PATH = table.concat({ vim.fn.stdpath("data"), "mason", "bin" }, sep) .. delim .. vim.env.PATH
+-- Define the function globally
+function _G.get_recording_status()
+    local reg = vim.fn.reg_recording()
+    if reg and reg ~= "" then
+        return "%#Error#Recording @" .. reg .. "%*" -- Error highlight group makes it red
+    end
+    return ""
+end

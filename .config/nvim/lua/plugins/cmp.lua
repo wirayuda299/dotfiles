@@ -2,10 +2,12 @@ return {
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
 	dependencies = {
+		"rafamadriz/friendly-snippets",
 		{
 			"L3MON4D3/LuaSnip",
-			dependencies = "rafamadriz/friendly-snippets",
-			opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+			config = function()
+				require("plugins.others")
+			end,
 		},
 
 		{
@@ -16,7 +18,6 @@ return {
 			},
 			config = function(_, opts)
 				require("nvim-autopairs").setup(opts)
-
 				local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 				require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
 			end,

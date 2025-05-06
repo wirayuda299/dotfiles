@@ -12,7 +12,7 @@ map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
 map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move Down" })
 map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
-
+vim.keymap.set("n", "Q", "<nop>")
 map("n", "<C-a>", "gg<S-v>G", { desc = "Select all" })
 map("i", "<C-a>", "<Esc>gg<S-v>G", { desc = "Select all" })
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
@@ -25,7 +25,7 @@ map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
 
 map({ "n", "x" }, "<leader>fm", function()
-	require("conform").format({ lsp_fallback = true, async = true })
+    require("conform").format({ lsp_fallback = true, async = true })
 end, { desc = "general format file" })
 
 -- Comment
@@ -48,21 +48,45 @@ map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git 
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 map("n", "<leader>km", "<cmd>Telescope keymaps<cr>", { desc = "List all keymaps" })
 map("n", "<leader>ql", "<cmd>Telescope quickfix<cr>", { desc = "Quickfix list" })
-map("n", "<leader>fr", "<cmd>Telescope frecency<CR>", { desc = "Recent files (frecency)" })
 
---buffers
-map("n", "<Tab>", ":bnext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
-map("n", "<S-Tab>", ":bprevious<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
-map("n", "<leader>bd", ":bd<CR>", { noremap = true, silent = true, desc = "Delete buffer" })
-map(
-	"n",
-	"<leader>bo",
-	":%bdelete|edit#|bdelete#<CR>",
-	{ noremap = true, silent = true, desc = "Delete all buffer except current one" }
-)
--- "DBUI",
--- 	"DBUIToggle",
--- 	"DBUIAddConnection",
--- 	"DBUIFindBuffer",
-map("n", "<C-b>", "<cmd>DBUIToggle<cr>", { desc = "Toggle DB" })
-map("n", "<leader>db", "<cmd>DBUIToggle<cr>", { desc = "Toggle DB" })
+map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next Buffer" })
+map("n", "<S-Tab>", "<cmd>bprev<CR>", { desc = "Prev Buffer" })
+
+
+local function smart_delete(dir)
+    -- dir = 'prev' atau 'next'
+    local cur = vim.api.nvim_get_current_buf()
+    local alt = vim.fn.bufnr('#') -- alternate buffer
+    local target
+
+    if dir == 'prev' then
+        target = alt
+    elseif dir == 'next' then
+        -- cari buffer setelah, pake bnext logic:
+        local bufs = vim.fn.getbufinfo({ buflisted = 1 })
+        for i, b in ipairs(bufs) do
+            if b.bufnr == cur then
+                target = bufs[i + 1] and bufs[i + 1].bufnr or nil
+                break
+            end
+        end
+    end
+
+    if target and vim.api.nvim_buf_is_loaded(target) then
+        vim.cmd('buffer ' .. target)
+    else
+        vim.cmd('enew') -- buka empty buffer baru
+    end
+
+    vim.api.nvim_buf_delete(cur, { force = true })
+end
+
+-- keymaps
+vim.keymap.set('n', '<leader>bp', function() smart_delete('prev') end, { desc = 'Delete Buffer (prev fallback)' })
+vim.keymap.set('n', '<leader>bn', function() smart_delete('next') end, { desc = 'Delete Buffer (next fallback)' })
+
+map("n", "<leader>bo", "<cmd>%bd|e#|bd#<CR>", { desc = "Only This Buffer" })
+
+for i = 1, 9 do
+    map("n", "<leader>" .. i, "<cmd>buffer " .. i .. "<CR>", { desc = "Go to Buffer " .. i })
+end

@@ -5,41 +5,42 @@ duration = 0
 [colors]
 draw_bold_text_with_bright_colors = true
 
+# One Dark Pro specific indexed colors
 [[colors.indexed_colors]]
-color = "0xF8BD96"
 index = 16
+color = "0xD19A66"
 
 [[colors.indexed_colors]]
-color = "0xF5E0DC"
 index = 17
-
-[colors.bright]
-black = "0x988BA2"
-blue = "0x96CDFB"
-cyan = "0x89DCEB"
-green = "0xABE9B3"
-magenta = "0xF5C2E7"
-red = "0xF28FAD"
-white = "0xD9E0EE"
-yellow = "0xFAE3B0"
-
-[colors.cursor]
-cursor = "0xF5E0DC"
-text = "0x1E1D2F"
-
-[colors.normal]
-black = "0x6E6C7E"
-blue = "0x96CDFB"
-cyan = "0x89DCEB"
-green = "0xABE9B3"
-magenta = "0xF5C2E7"
-red = "0xF28FAD"
-white = "0xD9E0EE"
-yellow = "0xFAE3B0"
+color = "0xBE5046"
 
 [colors.primary]
-background = "0x1E1D2F"
-foreground = "0xD9E0EE"
+background = "0x1E2127"  # Slightly darker background
+foreground = "0xABB2BF"
+
+[colors.normal]
+black   = "0x1E2127"  # Match background
+red     = "0xE06C75"
+green   = "0x98C379"
+yellow  = "0xE5C07B"
+blue    = "0x61AFEF"
+magenta = "0xC678DD"
+cyan    = "0x56B6C2"
+white   = "0xABB2BF"
+
+[colors.bright]
+black   = "0x5C6370"
+red     = "0xFF7A85"  # Brighter version
+green   = "0xB5E890"  # Brighter version
+yellow  = "0xFFD68A"  # Brighter version
+blue    = "0x69B4FF"  # Brighter version
+magenta = "0xD886F3"  # Brighter version
+cyan    = "0x6CD1DF"  # Brighter version
+white   = "0xFFFFFF"
+
+[colors.cursor]
+cursor = "0x528BFF"
+text   = "0x1E2127"  # Match background
 
 [cursor]
 blink_interval = 500
@@ -60,10 +61,6 @@ size = 14
 family = "JetBrainsMono Nerd Font"
 style = "Bold"
 
-[font.glyph_offset]
-x = 0
-y = 0
-
 [font.italic]
 family = "JetBrainsMono Nerd Font"
 
@@ -75,30 +72,34 @@ style = "Regular"
 x = 0
 y = 0
 
+[font.glyph_offset]
+x = 0
+y = 0
+
 [mouse]
 hide_when_typing = true
 
 [[mouse.bindings]]
-action = "PasteSelection"
 mouse = "Middle"
+action = "PasteSelection"
 
 [selection]
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
-[terminal.shell]
-program = "/bin/zsh"
+[terminal]
+shell.program = "/bin/zsh"
 
 [window]
-opacity = 0
-decorations_theme_variant = "Dark"
+opacity = 1
 decorations = "none"
+decorations_theme_variant = "Dark"
 dynamic_title = true
 startup_mode = "Fullscreen"
-title=""
+title = ""
+
 [window.dimensions]
 columns = 160
 lines = 80
-
 
 [window.padding]
 x = 0
@@ -106,5 +107,3 @@ y = 0
 
 [general]
 live_config_reload = true
-
-[terminal]

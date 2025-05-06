@@ -23,7 +23,6 @@ return {
 					"html",
 					"jsonls",
 					"rust_analyzer",
-					"sqls",
 				},
 				automatic_installation = true,
 			})
@@ -43,7 +42,6 @@ return {
 					go = { "gofmt" },
 					svelte = { "prettier" },
 					astro = { "prettier" },
-					sqls = { "sqlfmt" },
 				},
 				format_after_save = {
 					timeout_ms = 3000,
