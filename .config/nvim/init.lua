@@ -1,36 +1,35 @@
+vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
-vim.lsp.set_log_level("warn")
-vim.g.lsp_utils_cache = true
-vim.g.lsp_document_highlight_cache = true
-vim.g.lsp_cache_dir = vim.fn.stdpath("cache") .. "/lsp"
-vim.fn.mkdir(vim.g.lsp_cache_dir, "p") -- Ensure cache directory exists
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
-vim.loader.enable()
-
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable",
-        lazypath,
-    })
+if not vim.uv.fs_stat(lazypath) then
+   local repo = "https://github.com/folke/lazy.nvim.git"
+   vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
 end
+
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = require("plugins.configs.lazy")
+local lazy_config = require "configs.lazy"
 
 require("lazy").setup({
-    { import = "plugins" },
+   {
+      "NvChad/NvChad",
+      lazy = false,
+      branch = "v2.5",
+      import = "nvchad.plugins",
+   },
+
+   { import = "plugins" },
 }, lazy_config)
 
-require("options")
-require("autocmds")
+dofile(vim.g.base46_cache .. "defaults")
+dofile(vim.g.base46_cache .. "statusline")
+
+require "options"
+require "nvchad.autocmds"
+require "autocmds"
 
 vim.schedule(function()
-    require("mappings")
+   require "mappings"
 end)

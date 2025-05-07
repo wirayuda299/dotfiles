@@ -1,5 +1,4 @@
 local map = vim.keymap.set
-
 map("n", "<leader>fs", "<cmd>GoFillStruct<cr>", { desc = "Fill struct" })
 map("n", "<leader>at", "<cmd>GoAddTag<cr>", { desc = "Add JSON tag" })
 map("n", "<leader>rt", "<cmd>GoRmTag<cr>", { desc = "Remove JSON tag" })

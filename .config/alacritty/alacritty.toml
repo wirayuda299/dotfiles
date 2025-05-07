@@ -90,7 +90,7 @@ semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 shell.program = "/bin/zsh"
 
 [window]
-opacity = 1
+opacity = 0
 decorations = "none"
 decorations_theme_variant = "Dark"
 dynamic_title = true

@@ -1,49 +1,48 @@
-local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
-
-local yank_group = augroup("HighlightYank", {})
-
-autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
-    group = vim.api.nvim_create_augroup("NvFilePost", { clear = true }),
-    callback = function(args)
-        local file = vim.api.nvim_buf_get_name(args.buf)
-        local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
-
-        if not vim.g.ui_entered and args.event == "UIEnter" then
-            vim.g.ui_entered = true
-        end
-
-        if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
-            vim.api.nvim_exec_autocmds("User", { pattern = "FilePost", modeline = false })
-            vim.api.nvim_del_augroup_by_name("NvFilePost")
-
-            vim.schedule(function()
-                vim.api.nvim_exec_autocmds("FileType", {})
-
-                if vim.g.editorconfig then
-                    require("editorconfig").config(args.buf)
-                end
-            end)
-        end
-    end,
-})
+local WiraGroup = augroup("Wira", {})
+local autocmd = vim.api.nvim_create_autocmd
 
 autocmd("TextYankPost", {
-    group = yank_group,
-    callback = function()
-        vim.highlight.on_yank({
-            higroup = "IncSearch",
-            timeout = 40,
-        })
-    end,
+   group = WiraGroup,
+   callback = function()
+      (vim.highlight or vim.hl).on_yank()
+   end,
+})
+
+autocmd("LspAttach", {
+   group = WiraGroup,
+   callback = function(e)
+      local opts = { buffer = e.buf }
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+      vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+      vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, opts)
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+      vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+   end,
 })
 
 autocmd("LspDetach", {
-    group = augroup("lsp-detach", { clear = true }),
-    callback = function(e)
-        vim.lsp.buf.clear_references()
-        vim.api.nvim_clear_autocmds({
-            buffer = e.buf,
-        })
-    end,
+   group = augroup("kickstart-lsp-detach", { clear = true }),
+   callback = function(e)
+      vim.lsp.buf.clear_references()
+      vim.api.nvim_clear_autocmds {
+         group = WiraGroup,
+         buffer = e.buf,
+      }
+   end,
+})
+vim.api.nvim_create_autocmd("InsertLeave", {
+   pattern = "*",
+   command = "set nopaste",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+   pattern = { "json", "jsonc", "markdown" },
+   callback = function()
+      vim.opt.conceallevel = 0
+   end,
 })
