@@ -6,26 +6,36 @@ M.base46 = {
       Comment = { italic = true },
       ["@comment"] = { italic = true },
    },
+   theme_toggle = {
+      "onedark", "catppuccin"
+   },
 }
+M.colorify = {
+   enabled = false,
+}
+M.lsp.signature = false
+M.mason.command = true
 
 M.ui = {
-   transparent = false,
-   tabufline = {
-      enabled = true,
-      lazyload = true,
-      order = { "treeOffset", "buffers", "tabs", "btns" },
-      modules = nil,
-      bufwidth = 21,
-   },
-   nvdash = {
-      load_on_startup = false,
-   },
    cmp = {
-      icons = true,
-      lspkind_text = true,
-      style = "default",
-      border_color = "default",
-      selected_item_bg = "colored",
+      icons = false,
+      icons_left = false,
+      format_colors = {
+         lsp = true,
+         icon = "",
+      }
    },
+   statusline = {
+      separator_style = "arrow",
+      theme = "minimal",
+   },
+   tabufline = {
+      lazyload = true,
+
+   }
 }
+M.nvdash = {
+   load_on_startup = false,
+}
+
 return M
