@@ -12,5 +12,6 @@ local default_servers = {
   "jsonls",
   "cmake",
   "jdtls",
+  "eslint_d",
 }
 vim.lsp.enable(default_servers)
