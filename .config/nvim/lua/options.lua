@@ -1,5 +1,9 @@
 require "nvchad.options"
+-- A set of options for better completion experience. See `:h completeopt`
+vim.opt.completeopt = { "menuone", "noselect", "noinsert" }
 
+-- Hides the ins-completion-menu messages. See `:h shm-c`
+vim.opt.shortmess:append "c"
 vim.opt.updatetime = 500
 vim.opt.wrap = false
 vim.opt.laststatus = 3

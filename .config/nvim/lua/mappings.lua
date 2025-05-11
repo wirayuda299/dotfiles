@@ -1,5 +1,21 @@
-require"nvchad.mappings"
+require "nvchad.mappings"
 local map = vim.keymap.set
+------------- completion keymap --------------------
+vim.keymap.set("i", "<CR>", function()
+   if vim.fn.complete_info()["selected"] ~= -1 then return "<CR>" end
+   if vim.fn.pumvisible() ~= 0 then return "<CR>" end
+   return "<CR>"
+end, { expr = true })
+vim.keymap.set("i", "<Tab>", function()
+   if vim.fn.pumvisible() ~= 0 then return "<C-n>" end
+   return "<Tab>"
+end, { expr = true })
+
+vim.keymap.set("i", "<S-Tab>", function()
+   if vim.fn.pumvisible() ~= 0 then return "<C-p>" end
+   return "<S-Tab>"
+end, { expr = true })
+------------- completion keymap --------------------
 
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 
@@ -94,5 +110,3 @@ map("n", "<leader>gs", fzf.git_status, opts)   -- status
 map("n", "<leader>gf", fzf.git_files, opts)    -- file tracked
 map("n", "<leader>gc", fzf.git_commits, opts)  -- commit history
 map("n", "<leader>gb", fzf.git_branches, opts) -- branches
-
-
