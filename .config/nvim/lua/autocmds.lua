@@ -1,51 +1,45 @@
 local augroup = vim.api.nvim_create_augroup
-local WiraGroup = augroup("Wira", {})
+local WiraGroup = augroup("Wira", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd("TextYankPost", {
   group = WiraGroup,
   callback = function()
-    (vim.highlight or vim.hl).on_yank()
+    (vim.highlight or vim.hl).on_yank { timeout = 200 }
   end,
 })
+
 autocmd("LspAttach", {
   group = WiraGroup,
   callback = function(e)
     local opts = { buffer = e.buf }
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, opts)
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-    vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+    local map = vim.keymap.set
+    map("n", "gd", vim.lsp.buf.definition, opts)
+    map("n", "gr", vim.lsp.buf.references, opts)
+    map("n", "K", vim.lsp.buf.hover, opts)
+    map("n", "<leader>rn", vim.lsp.buf.rename, opts)
+    map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    map("n", "<leader>df", vim.diagnostic.open_float, opts)
+    map("n", "[d", vim.diagnostic.goto_prev, opts)
+    map("n", "]d", vim.diagnostic.goto_next, opts)
+    map("i", "<C-h>", vim.lsp.buf.signature_help, opts)
   end,
 })
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  callback = function()
-    require("lint").try_lint()
-  end,
-})
+
 autocmd("LspDetach", {
-  group = augroup("kickstart-lsp-detach", { clear = true }),
+  group = WiraGroup,
   callback = function(e)
-    vim.lsp.buf.clear_references()
     vim.api.nvim_clear_autocmds {
       group = WiraGroup,
       buffer = e.buf,
     }
   end,
 })
-vim.api.nvim_create_autocmd("InsertLeave", {
-  pattern = "*",
-  command = "set nopaste",
-})
 
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
+  group = WiraGroup,
   pattern = { "json", "jsonc", "markdown" },
   callback = function()
-    vim.opt.conceallevel = 0
+    vim.opt_local.conceallevel = 0
   end,
 })

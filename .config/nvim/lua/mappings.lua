@@ -1,21 +1,5 @@
 require "nvchad.mappings"
 local map = vim.keymap.set
-------------- completion keymap --------------------
-vim.keymap.set("i", "<CR>", function()
-   if vim.fn.complete_info()["selected"] ~= -1 then return "<CR>" end
-   if vim.fn.pumvisible() ~= 0 then return "<CR>" end
-   return "<CR>"
-end, { expr = true })
-vim.keymap.set("i", "<Tab>", function()
-   if vim.fn.pumvisible() ~= 0 then return "<C-n>" end
-   return "<Tab>"
-end, { expr = true })
-
-vim.keymap.set("i", "<S-Tab>", function()
-   if vim.fn.pumvisible() ~= 0 then return "<C-p>" end
-   return "<S-Tab>"
-end, { expr = true })
-------------- completion keymap --------------------
 
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 
@@ -23,54 +7,52 @@ map("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
 
 map({ "n", "x" }, "<leader>fm", function()
-   require("conform").format { lsp_fallback = true }
+  require("conform").format { lsp_fallback = true }
 end, { desc = "general format file" })
 
 map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
 map("n", "<leader>b", "<cmd>enew<CR>", { desc = "buffer new" })
 
 map("n", "<tab>", function()
-   require("nvchad.tabufline").next()
+  require("nvchad.tabufline").next()
 end, { desc = "buffer goto next" })
 
 map("n", "<S-tab>", function()
-   require("nvchad.tabufline").prev()
+  require("nvchad.tabufline").prev()
 end, { desc = "buffer goto prev" })
 
 map("n", "<leader>x", function()
-   require("nvchad.tabufline").close_buffer()
+  require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer close" })
 
 map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
 
-
 -- new terminals
 map("n", "<leader>h", function()
-   require("nvchad.term").new { pos = "sp" }
+  require("nvchad.term").new { pos = "sp" }
 end, { desc = "terminal new horizontal term" })
 
 map("n", "<leader>v", function()
-   require("nvchad.term").new { pos = "vsp" }
+  require("nvchad.term").new { pos = "vsp" }
 end, { desc = "terminal new vertical term" })
 
 map({ "n", "t" }, "<A-v>", function()
-   require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
+  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
 end, { desc = "terminal toggleable vertical term" })
 
 map({ "n", "t" }, "<A-h>", function()
-   require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
 end, { desc = "terminal toggleable horizontal term" })
 
 map({ "n", "t" }, "<A-i>", function()
-   require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
 end, { desc = "terminal toggle floating term" })
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 map("n", "<leader>srr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search & replace" })
-
 
 map("n", "mm", "mM", { desc = "Mark file" })
 map("n", "M", "`M", { desc = "Jump to marked file" })
@@ -88,25 +70,24 @@ map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", {
 map("n", "<C-a>", "gg<S-v>G", { desc = "Select all" })
 map("i", "<C-a>", "<Esc>gg<S-v>G", { desc = "Select all" })
 
-
 local fzf = require "fzf-lua"
 local opts = { noremap = true, silent = true }
 
 -- File & buffer
-map("n", "<leader>ff", fzf.files, opts)    -- semua file (git-ignore aware)
+map("n", "<leader>ff", fzf.files, opts) -- semua file (git-ignore aware)
 map("n", "<leader>fo", fzf.oldfiles, opts) -- recent files
-map("n", "<leader>fb", fzf.buffers, opts)  -- buffers
+map("n", "<leader>fb", fzf.buffers, opts) -- buffers
 
 -- Search
 map("n", "<leader>fg", fzf.live_grep, opts) -- grep teks
-map("n", "<leader>fr", fzf.resume, opts)    -- lanjutin session sebelumnya
+map("n", "<leader>fr", fzf.resume, opts) -- lanjutin session sebelumnya
 
 -- Help & marks
 map("n", "<leader>fh", fzf.help_tags, opts) -- help
-map("n", "<leader>fm", fzf.marks, opts)     -- bookmarks
+map("n", "<leader>fm", fzf.marks, opts) -- bookmarks
 
 -- Git
-map("n", "<leader>gs", fzf.git_status, opts)   -- status
-map("n", "<leader>gf", fzf.git_files, opts)    -- file tracked
-map("n", "<leader>gc", fzf.git_commits, opts)  -- commit history
+map("n", "<leader>gs", fzf.git_status, opts) -- status
+map("n", "<leader>gf", fzf.git_files, opts) -- file tracked
+map("n", "<leader>gc", fzf.git_commits, opts) -- commit history
 map("n", "<leader>gb", fzf.git_branches, opts) -- branches

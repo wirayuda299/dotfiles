@@ -1,8 +1,11 @@
 return {
   "hrsh7th/nvim-cmp",
-  enable = false,
   opts = function(_, opts)
     local cmp = require "cmp"
+
+    cmp.event:on("menu_opened", function()
+      vim.print "cmp menu opened"
+    end)
     local custom = {
       mapping = {
         ["<CR>"] = cmp.mapping.confirm { select = true }, -- enter buat confirm pilihan
@@ -10,14 +13,14 @@ return {
         ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
       },
       sources = cmp.config.sources {
-        { name = "nvim_lsp", priority = 1000 },
+        { name = "nvim_lsp", priority = 1000, max_item_count = 10 },
         { name = "luasnip", priority = 750 },
-        { name = "async_path", priority = 250 }, -- For luasnip users.
-        { name = "render-markdown", priority = 200 },
+        { name = "async_path", priority = 250, keyword_length = 3 },
         { name = "lazydev", group_index = 0 },
       },
       completion = {
         completeopt = "menu,menuone,noselect",
+        autocomplete = false,
       },
 
       performance = {
