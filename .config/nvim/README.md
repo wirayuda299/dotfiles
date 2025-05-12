@@ -1,4 +1,3 @@
 ## This is my neovim config
 
-> [!NOTE]
-> This is personal config
+Blazingly fast neovim configurations for web dev
