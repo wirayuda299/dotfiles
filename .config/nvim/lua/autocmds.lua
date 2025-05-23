@@ -1,5 +1,4 @@
-local augroup = vim.api.nvim_create_augroup
-local WiraGroup = augroup("Wira", { clear = true })
+local WiraGroup = vim.api.nvim_create_augroup("Wira", { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd("TextYankPost", {
@@ -9,6 +8,14 @@ autocmd("TextYankPost", {
   end,
 })
 
+autocmd("BufEnter", {
+  callback = function()
+    local bufname = vim.api.nvim_buf_get_name(0)
+    if bufname == "" and vim.bo.buftype == "" then
+      vim.cmd "bd"
+    end
+  end,
+})
 autocmd("LspAttach", {
   group = WiraGroup,
   callback = function(e)
@@ -33,13 +40,5 @@ autocmd("LspDetach", {
       group = WiraGroup,
       buffer = e.buf,
     }
-  end,
-})
-
-autocmd("FileType", {
-  group = WiraGroup,
-  pattern = { "json", "jsonc", "markdown" },
-  callback = function()
-    vim.opt_local.conceallevel = 0
   end,
 })

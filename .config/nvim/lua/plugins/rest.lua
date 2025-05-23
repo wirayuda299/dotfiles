@@ -2,6 +2,7 @@ return {
   "rest-nvim/rest.nvim",
   cmd = { "Rest" },
   ft = { "http" },
+  lazy = true,
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)

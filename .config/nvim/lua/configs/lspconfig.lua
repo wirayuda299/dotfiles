@@ -1,6 +1,6 @@
 local default_servers = {
   "lua_ls",
-  "clangd",
+  -- "clangd",
   "lua_ls",
   "gopls",
   "ts_ls",
@@ -10,8 +10,7 @@ local default_servers = {
   "cssls",
   "html",
   "jsonls",
-  "cmake",
-  "jdtls",
-  "eslint_d",
+  -- "cmake",
+  -- "jdtls",
 }
 vim.lsp.enable(default_servers)

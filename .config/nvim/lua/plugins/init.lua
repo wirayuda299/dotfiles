@@ -1,20 +1,10 @@
 return {
-
-  {
-    "zeioth/garbage-day.nvim",
-    dependencies = "neovim/nvim-lspconfig",
-    event = "VeryLazy",
-    opts = {
-      aggressive_mode = true,
-      notifications = true,
-    },
-  },
-
   {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     opts = require "configs.conform",
   },
+  { "nvim-tree/nvim-web-devicons", enabled = false },
 
   {
     "folke/which-key.nvim",
@@ -24,4 +14,7 @@ return {
     "nvim-telescope/telescope.nvim",
     enabled = false,
   },
+
+  { "nvzone/volt", enabled = false },
+  -- { "akinsho/bufferline.nvim", version = "*", dependencies = {} },
 }

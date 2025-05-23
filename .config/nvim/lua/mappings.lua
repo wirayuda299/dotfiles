@@ -1,10 +1,11 @@
 require "nvchad.mappings"
+
 local map = vim.keymap.set
 
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
-map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
+map({ "n", "v" }, "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
 
 map({ "n", "x" }, "<leader>fm", function()
   require("conform").format { lsp_fallback = true }
@@ -13,17 +14,11 @@ end, { desc = "general format file" })
 map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
 map("n", "<leader>b", "<cmd>enew<CR>", { desc = "buffer new" })
 
-map("n", "<tab>", function()
-  require("nvchad.tabufline").next()
-end, { desc = "buffer goto next" })
-
-map("n", "<S-tab>", function()
-  require("nvchad.tabufline").prev()
-end, { desc = "buffer goto prev" })
-
-map("n", "<leader>x", function()
-  require("nvchad.tabufline").close_buffer()
-end, { desc = "buffer close" })
+map("n", "<tab>", ":bnext<CR>", { desc = "buffer goto next" })
+map("n", "<S-tab>", ":bprevious<CR>", { desc = "buffer goto prev" })
+map("n", "<leader>ba", ":bufdo bd<CR>", { desc = "Close all buffers" })
+map("n", "<leader>bo", ":%bd|e#|bd#<CR>", { desc = "Close other buffers" })
+map("n", "<leader>x", ":bd<CR>", { desc = "buffer close" })
 
 map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
@@ -85,6 +80,7 @@ map("n", "<leader>fr", fzf.resume, opts) -- lanjutin session sebelumnya
 -- Help & marks
 map("n", "<leader>fh", fzf.help_tags, opts) -- help
 map("n", "<leader>fm", fzf.marks, opts) -- bookmarks
+map("n", "<leader>km", fzf.keymaps, opts) -- bookmarks
 
 -- Git
 map("n", "<leader>gs", fzf.git_status, opts) -- status

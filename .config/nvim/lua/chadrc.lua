@@ -14,10 +14,12 @@ M.base46 = {
 M.colorify = {
   enabled = false,
 }
-M.lsp.signature = false
-M.mason.command = true
 
 M.ui = {
+  tabufline = {
+    enabled = false,
+  },
+  transparent = true,
   cmp = {
     icons = false,
     icons_left = false,
@@ -29,9 +31,6 @@ M.ui = {
   statusline = {
     separator_style = "arrow",
     theme = "minimal",
-  },
-  tabufline = {
-    lazyload = true,
   },
 }
 M.nvdash = {

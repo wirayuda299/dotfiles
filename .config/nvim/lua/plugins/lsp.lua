@@ -4,6 +4,7 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     require "configs.lspconfig"
+
     vim.diagnostic.config {
       virtual_text = true,
       signs = false,
