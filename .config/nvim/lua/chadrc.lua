@@ -1,40 +1,33 @@
+-- This file needs to have same structure as nvconfig.lua
+-- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
+-- Please read that file to know all available options :(
+
 ---@type ChadrcConfig
 local M = {}
 
+M.colorify = {
+  enabled = false,
+}
 M.base46 = {
+  theme = "onedark",
   hl_override = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
   },
-  theme_toggle = {
-    "onedark",
-    "catppuccin",
-  },
-}
-M.colorify = {
-  enabled = false,
 }
 
+M.nvdash = { load_on_startup = false }
 M.ui = {
   tabufline = {
     enabled = false,
   },
-  transparent = true,
   cmp = {
     icons = false,
-    icons_left = false,
     format_colors = {
-      lsp = true,
       icon = "",
+      lsp = false,
     },
   },
-  statusline = {
-    separator_style = "arrow",
-    theme = "minimal",
-  },
-}
-M.nvdash = {
-  load_on_startup = false,
 }
 
 return M

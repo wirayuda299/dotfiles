@@ -1,19 +1,12 @@
 require "nvchad.options"
+-- local o = vim.o
+-- o.cursorlineopt ='both' -- to enable cursorline!
+vim.g.markdown_recommended_style = 0
+vim.opt.linebreak = true -- Wrap lines at convenient points
+vim.g.nvim_web_devicons_enabled = false
+vim.opt.swapfile = false
 
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_ruby_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_node_provider = 0
+vim.opt.backup = false
+vim.opt.writebackup = false
 
-vim.o.swapfile = false
-vim.o.swapfile = false
-vim.opt.shortmess:append "c"
-vim.opt.updatetime = 500
-vim.opt.wrap = false
-vim.opt.laststatus = 3
-vim.opt.tabstop = 3
-vim.opt.softtabstop = 3
-vim.opt.shiftwidth = 3
-vim.o.relativenumber = true
-vim.o.number = true
-vim.opt.linebreak = true
+vim.opt.undofile = false
