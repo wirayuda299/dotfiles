@@ -17,7 +17,7 @@ return {
     fullscreen = false,
     preview = {
       delay = 50,
-      layout = "horizontal",    -- biar preview di kanan
+      layout = "horizontal", -- biar preview di kanan
       horizontal = "right:50%", -- preview 50% di kanan
       wrap = "wrap",
       title = true,

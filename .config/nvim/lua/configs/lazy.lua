@@ -1,6 +1,6 @@
 return {
   defaults = { lazy = true },
-  install = { colorscheme = { "catppuccin" } },
+  install = { colorscheme = { "nvchad" } },
 
   ui = {
     icons = {
@@ -36,6 +36,7 @@ return {
         "vimball",
         "vimballPlugin",
         "zip",
+        "matchparen",
         "zipPlugin",
         "tutor",
         "rplugin",
@@ -44,6 +45,7 @@ return {
         "optwin",
         "compiler",
         "bugreport",
+        "ftplugin",
       },
     },
   },
