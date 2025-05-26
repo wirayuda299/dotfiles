@@ -11,12 +11,7 @@ return {
     "dmmulroy/ts-error-translator.nvim",
     opts = {},
   },
-  { "echasnovski/mini.nvim", version = "*" },
-  {
-    "nvimdev/indentmini.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {},
-  },
+
   {
     "Wansmer/symbol-usage.nvim",
     event = "LspAttach",
