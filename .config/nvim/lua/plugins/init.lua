@@ -1,6 +1,15 @@
 return {
+
+  {
+    "pteroctopus/faster.nvim",
+    lazy = true,
+    config = function()
+      require("faster").setup()
+    end,
+  },
   {
     "windwp/nvim-ts-autotag",
+    lazy = true,
     ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
     config = function()
       require("nvim-ts-autotag").setup()
@@ -9,11 +18,15 @@ return {
 
   {
     "dmmulroy/ts-error-translator.nvim",
+    ft = { "typescript" },
+    lazy = true,
+    event = { "VeryLazy" },
     opts = {},
   },
 
   {
     "Wansmer/symbol-usage.nvim",
+    lazy = true,
     event = "LspAttach",
     opts = {
       vt_position = "end_of_line",
@@ -30,16 +43,17 @@ return {
   },
   {
     "azratul/expose-localhost.nvim",
+    lazy = true,
     event = "VeryLazy",
     cmd = { "ExposeStart" },
     ft = { "html", "javascript", "typescript", "svelte", "astro" },
   },
   {
     "ray-x/go.nvim",
+    lazy = true,
     ft = { "go", "gomod" },
     dependencies = {
       "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
     },
     config = function()
       require("go").setup {}
@@ -48,12 +62,14 @@ return {
   },
   {
     "stevearc/conform.nvim",
+    lazy = true,
     event = "BufWritePre",
     opts = require "configs.conform",
   },
 
   {
     "neovim/nvim-lspconfig",
+    lazy = true,
     config = function()
       vim.diagnostic.config {
         virtual_text = true,
@@ -76,6 +92,7 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
+    lazy = true,
     opts = function(_, opts)
       local custom = require "configs.completion"
       return vim.tbl_deep_extend("force", opts, custom)
@@ -84,6 +101,8 @@ return {
 
   {
     "ibhagwan/fzf-lua",
+    lazy = true,
+    event = "VeryLazy",
     keys = {
       { "<leader><space>", "<cmd>FzfLua files<cr>", desc = "find files" },
       { "<leader>,", "<cmd>FzfLua buffers<cr>", desc = "switch buffer" },

@@ -1,5 +1,8 @@
 return {
-
+  {
+    "nvim-treesitter/nvim-treesitter",
+    enabled = false,
+  },
   {
     "lewis6991/gitsigns.nvim",
     enabled = false,

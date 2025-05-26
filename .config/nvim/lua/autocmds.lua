@@ -1,6 +1,7 @@
 local function augroup(name)
   return vim.api.nvim_create_augroup("nvchad_" .. name, { clear = true })
 end
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = augroup "lsp_attach",
   callback = function(e)

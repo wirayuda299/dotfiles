@@ -1,5 +1,6 @@
 local cmp = require "cmp"
 local cmpSelect = cmp.SelectBehavior.Select
+
 return {
   mapping = {
     ["<CR>"] = cmp.mapping.confirm { select = true },
@@ -8,22 +9,28 @@ return {
   },
   sources = cmp.config.sources {
     { name = "nvim_lsp", priority = 1000, max_item_count = 10 },
-    { name = "luasnip", priority = 750, keyword_length = 7 },
-    { name = "path", priority = 250, keyword_length = 3 },
+    { name = "luasnip", keyword_length = 2 },
+    { name = "path", keyword_length = 3 },
   },
   completion = {
-    completeopt = "menu,menuone,noinsert",
+    completeopt = "menu,menuone,noselect",
   },
 
   sorting = {
-    priority_weight = 2,
+    priority_weight = 1,
     comparators = {
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
-      cmp.config.compare.score,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.locality,
+      cmp.config.compare.offset, -- prioritizes items closer to the cursor
+      cmp.config.compare.exact, -- prioritizes items starting with exactly the same prefix
+      cmp.config.compare.score, -- prioritizes item similarity score
+      cmp.config.compare.recently_used, -- prioritizes recently used items
+      cmp.config.compare.kind, -- prioritizes items with the same kind
+      cmp.config.compare.sort_text, -- prioritizes prefix matches within completion items
+      cmp.config.compare.length, -- prioritizes shorter completion items
+      cmp.config.compare.order, -- prioritizes items in the same received order
       -- Removed: kind, length, order (slower comparators)
+    },
+    debug = {
+      priority = true,
     },
   },
   window = {
