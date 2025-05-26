@@ -1,5 +1,4 @@
 return {
-
   {
     "windwp/nvim-ts-autotag",
     ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
@@ -63,14 +62,7 @@ return {
     config = function()
       vim.diagnostic.config {
         virtual_text = true,
-        signs = {
-          severity = {
-            [vim.diagnostic.severity.ERROR] = { text = "E", texthl = "DiagnosticSignError" },
-            [vim.diagnostic.severity.WARN] = { text = "W", texthl = "DiagnosticSignWarn" },
-            [vim.diagnostic.severity.INFO] = { text = "I", texthl = "DiagnosticSignInfo" },
-            [vim.diagnostic.severity.HINT] = { text = "H", texthl = "DiagnosticSignHint" },
-          },
-        },
+        signs = true,
         underline = true,
         update_in_insert = false,
         severity_sort = true,

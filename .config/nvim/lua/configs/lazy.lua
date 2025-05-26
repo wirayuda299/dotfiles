@@ -1,6 +1,5 @@
 return {
   defaults = { lazy = true },
-  install = { colorscheme = { "nvchad" } },
 
   ui = {
     icons = {
@@ -26,6 +25,8 @@ return {
         "logipat",
         "netrw",
         "netrwPlugin",
+        "vimopts",
+        "illuminate",
         "netrwSettings",
         "netrwFileHandlers",
         "matchit",

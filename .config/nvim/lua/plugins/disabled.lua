@@ -28,9 +28,6 @@ return {
     "ray-x/cmp-treesitter",
     enabled = false,
   },
-  {
-    "nvim-tree/nvim-web-devicons",
-    enabled = false,
-  },
+
   { "akinsho/bufferline.nvim", enabled = false },
 }

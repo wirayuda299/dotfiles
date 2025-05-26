@@ -69,7 +69,6 @@ lspconfig.ts_ls.setup {
     end,
   },
 }
--- Custom Tailwind CSS settings
 lspconfig.tailwindcss.setup {
   settings = {
     tailwindCSS = {

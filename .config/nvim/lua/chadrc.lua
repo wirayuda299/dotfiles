@@ -8,8 +8,9 @@ local M = {}
 M.colorify = {
   enabled = false,
 }
+M.lsp.signature = false
 M.base46 = {
-  theme = "onedark",
+  transparency = true,
   hl_override = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
