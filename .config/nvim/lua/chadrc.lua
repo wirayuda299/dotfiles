@@ -10,6 +10,7 @@ M.colorify = {
 }
 M.lsp.signature = false
 M.base46 = {
+
   transparency = true,
   hl_override = {
     Comment = { italic = true },
@@ -67,11 +68,17 @@ M.base46 = {
 
 M.nvdash = { load_on_startup = false }
 M.ui = {
+
   tabufline = {
     enabled = false,
   },
+  statusline = {
+    theme = "minimal",
+  },
   cmp = {
     icons = false,
+    icons_left = false,
+    style = "flat_dark",
     format_colors = {
       icon = "",
       lsp = false,

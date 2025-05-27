@@ -56,12 +56,10 @@ return {
   },
   preselect = cmp.PreselectMode.None,
   formatting = {
-    fields = { "kind", "abbr" }, -- Remove menu field
-    format = function(entry, vim_item)
-      -- Ultra-minimal formatting
-      vim_item.menu = nil -- Remove source name
+    fields = { "kind", "abbr" },
+    format = function(_, vim_item)
+      vim_item.menu = nil
 
-      -- Truncate long completions
       if #vim_item.abbr > 30 then
         vim_item.abbr = vim_item.abbr:sub(1, 27) .. "..."
       end

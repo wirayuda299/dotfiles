@@ -1,22 +1,6 @@
 return {
 
   {
-    "pteroctopus/faster.nvim",
-    lazy = true,
-    config = function()
-      require("faster").setup()
-    end,
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    lazy = true,
-    ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-    config = function()
-      require("nvim-ts-autotag").setup()
-    end,
-  },
-
-  {
     "dmmulroy/ts-error-translator.nvim",
     ft = { "typescript" },
     lazy = true,
@@ -44,6 +28,7 @@ return {
   {
     "azratul/expose-localhost.nvim",
     lazy = true,
+    enabled = false,
     event = "VeryLazy",
     cmd = { "ExposeStart" },
     ft = { "html", "javascript", "typescript", "svelte", "astro" },
