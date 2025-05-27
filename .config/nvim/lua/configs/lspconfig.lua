@@ -3,7 +3,6 @@ local lspconfig = require "lspconfig"
 local servers = { "html", "cssls", "gopls", "tailwindcss", "lua_ls", "ts_ls", "emmet_ls" }
 vim.lsp.enable(servers)
 
-vim.lsp.inlay_hint.enable()
 lspconfig.emmet_ls.setup {
   cmd = { "emmet-ls", "--stdio" },
   filetypes = {
