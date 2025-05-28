@@ -16,6 +16,7 @@ lspconfig.ts_ls.setup {
     end,
   },
 }
+
 lspconfig.tailwindcss.setup {
   settings = {
     tailwindCSS = {

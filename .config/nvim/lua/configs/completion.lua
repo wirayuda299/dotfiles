@@ -19,15 +19,14 @@ return {
   sorting = {
     priority_weight = 1,
     comparators = {
-      cmp.config.compare.offset, -- prioritizes items closer to the cursor
-      cmp.config.compare.exact, -- prioritizes items starting with exactly the same prefix
-      cmp.config.compare.score, -- prioritizes item similarity score
-      cmp.config.compare.recently_used, -- prioritizes recently used items
-      cmp.config.compare.kind, -- prioritizes items with the same kind
-      cmp.config.compare.sort_text, -- prioritizes prefix matches within completion items
-      cmp.config.compare.length, -- prioritizes shorter completion items
-      cmp.config.compare.order, -- prioritizes items in the same received order
-      -- Removed: kind, length, order (slower comparators)
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
     },
     debug = {
       priority = true,
@@ -59,11 +58,9 @@ return {
     fields = { "kind", "abbr" },
     format = function(_, vim_item)
       vim_item.menu = nil
-
       if #vim_item.abbr > 30 then
         vim_item.abbr = vim_item.abbr:sub(1, 27) .. "..."
       end
-
       return vim_item
     end,
   },

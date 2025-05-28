@@ -12,12 +12,10 @@ end, { desc = "general format file" })
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
-map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
-map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
 map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
-map("n", "<leader>h", function()
+map("n", "<leader>/", function()
   require("nvchad.term").new { pos = "sp" }
 end, { desc = "terminal new horizontal term" })
 
