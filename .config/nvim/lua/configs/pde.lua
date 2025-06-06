@@ -1,6 +1,6 @@
 -- lua/config/plugins_toggle.lua
 return {
-  treesitter = false,
+  treesitter = true,
   gitsigns = false,
   indent_blankline = false,
   which_key = false,
@@ -8,7 +8,7 @@ return {
   volt = false,
   minty = false,
   cmp_treesitter = false,
-  bufferline = false,
+  bufferline = true,
   symbol_usage = false,
   exposed = false,
 }

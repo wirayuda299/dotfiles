@@ -1,4 +1,4 @@
-local toggle = require "configs.enabled_modules"
+local toggle = require "configs.pde"
 
 return {
   {
@@ -20,9 +20,10 @@ return {
       ft = { "html", "javascript", "typescript", "svelte", "astro" },
     },
 
+    -- di dalam table plugins:
+
     {
       "Wansmer/symbol-usage.nvim",
-      lazy = true,
       enabled = toggle.symbol_usage,
       event = "LspAttach",
       opts = {
@@ -63,7 +64,9 @@ return {
     "stevearc/conform.nvim",
     lazy = true,
     event = "BufWritePre",
-    opts = require "configs.conform",
+    opts = function()
+      return require "configs.conform"
+    end,
   },
 
   {
@@ -102,7 +105,7 @@ return {
   {
     "ibhagwan/fzf-lua",
     lazy = true,
-    event = "VeryLazy",
+    cmd = "FzfLua",
     keys = {
       { "<leader><space>", "<cmd>FzfLua files<cr>", desc = "find files" },
       { "<leader>,", "<cmd>FzfLua buffers<cr>", desc = "switch buffer" },

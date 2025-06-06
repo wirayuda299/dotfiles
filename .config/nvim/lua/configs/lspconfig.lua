@@ -1,9 +1,8 @@
 require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
-local servers = { "html", "cssls", "gopls", "tailwindcss", "lua_ls", "ts_ls", "emmet_ls" }
+local servers = { "html", "cssls", "gopls", "tailwindcss", "lua_ls", "ts_ls", "emmet_ls", "rust_analyzer" }
 
 vim.lsp.enable(servers)
-
 lspconfig.ts_ls.setup {
   formatter = "prettier",
   setup = {

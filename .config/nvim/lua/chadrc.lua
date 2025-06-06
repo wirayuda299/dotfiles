@@ -86,5 +86,6 @@ M.ui = {
     abbr_maxwidth = 80,
   },
 }
+M.plugins = require "custom.plugins.diagnostic"
 
 return M

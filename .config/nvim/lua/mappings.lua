@@ -18,6 +18,15 @@ map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window"
 map("n", "<leader>/", function()
   require("nvchad.term").new { pos = "sp" }
 end, { desc = "terminal new horizontal term" })
+map("n", "<S-Tab>", function()
+  require("nvchad.tabufline").prev()
+end, { desc = "Previous buffer" })
+map("n", "<Tab>", function()
+  require("nvchad.tabufline").next()
+end, { desc = "Next buffer" })
+map("n", "<leader>x", function()
+  require("nvchad.tabufline").close_buffer()
+end, { desc = "Close buffer" })
 
 map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down" })
 map("n", "<A-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = "Move Up" })
