@@ -9,6 +9,6 @@ return {
   minty = false,
   cmp_treesitter = false,
   bufferline = true,
-  symbol_usage = false,
+  symbol_usage = true,
   exposed = false,
 }

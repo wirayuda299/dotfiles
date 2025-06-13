@@ -1,3 +1,4 @@
+dofile(vim.g.base46_cache .. "cmp")
 local cmp = require "cmp"
 local cmpSelect = cmp.SelectBehavior.Select
 
@@ -11,6 +12,8 @@ return {
     { name = "nvim_lsp", priority = 1000, max_item_count = 10 },
     { name = "luasnip", keyword_length = 2 },
     { name = "path", keyword_length = 3 },
+    { name = "vim-dadbod-completion" },
+    { name = "supermaven", group_index = 1, priority = 100 },
   },
   completion = {
     completeopt = "menu,menuone,noselect",

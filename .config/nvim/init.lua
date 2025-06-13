@@ -1,6 +1,9 @@
+vim.loader.enable()
+
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
+
 vim.g.mapleader = " "
-require "diagnostic"
+
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
 if not vim.uv.fs_stat(lazypath) then
@@ -11,6 +14,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local lazy_config = require "configs.lazy"
+
 require("lazy").setup({
   {
     "NvChad/NvChad",

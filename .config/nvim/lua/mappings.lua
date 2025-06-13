@@ -1,5 +1,5 @@
 local map = vim.keymap.set
-
+map("n", "<leader>fr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 map("n", "<C-a>", "gg<S-v>G", { desc = "Select all" })
 map("i", "<C-a>", "<Esc>gg<S-v>G", { desc = "Select all" })
 map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
