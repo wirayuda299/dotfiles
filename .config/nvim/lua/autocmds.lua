@@ -2,35 +2,38 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("nvchad_" .. name, { clear = true })
 end
 
-vim.api.nvim_create_autocmd("LspAttach", {
+local autocmd = vim.api.nvim_create_autocmd
+
+local function opts(desc, bufnr)
+  return {
+    buffer = bufnr,
+    desc = "LSP: " .. desc
+  }
+end
+
+local showDiagnosticSums = function()
+  require("troublesum").show()
+end
+
+autocmd("LspAttach", {
   group = augroup "lsp_attach",
   callback = function(e)
-    local function opts(desc)
-      return {
-        buffer = e.buf,
-        desc = "LSP: " .. desc
-      }
-    end
-
     local map = vim.keymap.set
+    local bufnr = e.buf
+    showDiagnosticSums()
+
     map("n", "<leader>ws", function()
       vim.lsp.buf.workspace_symbol()
-    end, opts("workspace symbol"))
-    map("n", "<leader>f", function()
-      vim.diagnostic.open_float()
-    end, opts("Float diagnostic"))
+    end, opts("workspace symbol", bufnr))
     map("n", "<leader>.", function()
       vim.lsp.buf.code_action()
-    end, opts("Code action"))
+    end, opts("Code action", bufnr))
     map("n", "<leader>rr", function()
       vim.lsp.buf.references()
-    end, opts("References"))
-    map("n", "<leader>rn", function()
-      vim.lsp.buf.rename()
-    end, opts("rename"))
+    end, opts("References", bufnr))
     map("i", "<c-k>", function()
       vim.lsp.buf.signature_help()
-    end, opts("Signature help"))
+    end, opts("Signature help", bufnr))
 
     map("n", "[d", function()
       vim.diagnostic.jump({
@@ -38,18 +41,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
         float = true,
         wrap = true,
       })
-    end, opts("Next diagnostic"))
+    end, opts("Next diagnostic", bufnr))
     map("n", "]d", function()
       vim.diagnostic.jump({
         count = -1,
         float = true,
         wrap = true,
       })
-    end, opts("Previous diagnostic"))
+    end, opts("Previous diagnostic", bufnr))
   end,
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
   group = augroup "highlight_yank",
   callback = function()
     (vim.hl or vim.highlight).on_yank()

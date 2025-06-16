@@ -1,13 +1,14 @@
 require "nvchad.options"
-
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.g.did_load_filetypes = 1
 vim.g.did_load_ftplugin = 1
 vim.g.did_load_syntax = 1
 vim.opt.shadafile = "NONE"
 vim.opt.swapfile = false
-vim.opt.history = 100 -- default is 10000
-vim.opt.scrolljump = 5 -- Jump 5 lines when scrolling off screen
-vim.opt.ttimeoutlen = 10 -- Faster key sequence timeout
+vim.opt.history = 100        -- default is 10000
+vim.opt.scrolljump = 5       -- Jump 5 lines when scrolling off screen
+vim.opt.ttimeoutlen = 10     -- Faster key sequence timeout
 vim.opt.maxmempattern = 1000 -- Limit pattern matching memory
 vim.opt.lazyredraw = true
 vim.opt.ttyfast = true
@@ -28,11 +29,11 @@ vim.g.loaded_vimballPlugin = 1
 vim.g.loaded_logiPat = 1
 vim.g.loaded_rrhelper = 1
 vim.g.loaded_syntax_completion = 1
-vim.g.loaded_fzf = 1 -- if you don't use fzf
+vim.g.loaded_fzf = 1         -- if you don't use fzf
 vim.g.loaded_health = 1
 vim.o.cursorlineopt = "both" -- to enable cursorline!
 vim.g.markdown_recommended_style = 0
-vim.opt.linebreak = true -- Wrap lines at convenient points
+vim.opt.linebreak = true     -- Wrap lines at convenient points
 vim.g.nvim_web_devicons_enabled = false
 vim.opt.swapfile = false
 vim.opt.backup = false

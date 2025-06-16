@@ -11,11 +11,10 @@ return {
   },
 
   performance = {
-    cache = {
-      enabled = true,
-    },
+    cache = { enabled = true },
     reset_packpath = true,
     rtp = {
+      reset = true,
       disabled_plugins = {
         "2html_plugin",
         "tohtml",

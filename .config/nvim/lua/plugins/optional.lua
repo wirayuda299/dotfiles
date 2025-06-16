@@ -1,14 +1,31 @@
 local toggle = require "configs.pde"
 return {
-  { "nvim-treesitter/nvim-treesitter", enabled = toggle.treesitter },
-  { "lewis6991/gitsigns.nvim", enabled = toggle.gitsigns },
+  {
+    "supermaven-inc/supermaven-nvim",
+    event = "InsertEnter",
+    enabled = toggle.ai,
+    cmd = {
+      "SupermavenUseFree",
+      "SupermavenUsePro",
+    },
+    opts = {
+      keymaps = {
+        accept_suggestion = nil,
+      },
+      disable_inline_completion = vim.g.ai_cmp,
+      ignore_filetypes = { "bigfile", "snacks_input", "snacks_notif" },
+    },
+
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    enabled = toggle.treesitter,
+  },
+  { "lewis6991/gitsigns.nvim",             enabled = toggle.gitsigns },
   { "lukas-reineke/indent-blankline.nvim", enabled = toggle.indent_blankline },
-  { "folke/which-key.nvim", enabled = toggle.which_key },
-  { "nvim-telescope/telescope.nvim", enabled = toggle.telescope },
-  { "nvzone/volt", enabled = toggle.volt },
-  { "nvzone/minty", enabled = toggle.minty },
-  { "ray-x/cmp-treesitter", enabled = toggle.cmp_treesitter },
-  { "akinsho/bufferline.nvim", enabled = toggle.bufferline },
+  { "folke/which-key.nvim",                enabled = toggle.which_key },
+  { "nvim-telescope/telescope.nvim",       enabled = toggle.telescope },
+  { "ray-x/cmp-treesitter",                enabled = toggle.cmp_treesitter },
   {
     "azratul/expose-localhost.nvim",
     lazy = true,
@@ -16,6 +33,10 @@ return {
     event = "VeryLazy",
     cmd = { "ExposeStart" },
     ft = { "html", "javascript", "typescript", "svelte", "astro" },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    enabled = false,
   },
   {
     "Wansmer/symbol-usage.nvim",

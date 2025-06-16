@@ -1,5 +1,3 @@
-vim.loader.enable()
-
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 
 vim.g.mapleader = " "
@@ -11,6 +9,7 @@ if not vim.uv.fs_stat(lazypath) then
   vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
 end
 
+
 vim.opt.rtp:prepend(lazypath)
 
 local lazy_config = require "configs.lazy"
@@ -21,9 +20,6 @@ require("lazy").setup({
     lazy = true,
     branch = "v2.5",
     import = "nvchad.plugins",
-    config = function()
-      require "options"
-    end,
   },
 
   { import = "plugins" },
@@ -32,6 +28,7 @@ require("lazy").setup({
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 
+require "options"
 require "autocmds"
 require "nvchad.autocmds"
 

@@ -17,15 +17,18 @@ M.base46 = {
     ["@comment"] = { italic = true },
   },
   integrations = {
-    treesitter = {
-      enabled = false,
-    },
+    treesitter = { enabled = false },
     alpha = { enabled = false },
     avante = { enabled = false },
+    cmp = { enabled = false },
+    nvimtree = { enabled = false },
+    bufferline = { enabled = false },
+    blankline = { enabled = false },
+    blink = { enabled = false },
+
     ---| "'blankline'"
     ---| "'blink'"
     ---| "'bufferline'"
-    ---| "'cmp'"
     ---| "'codeactionmenu'"
     ---| "'dap'"
     ---| "'defaults'"
@@ -38,10 +41,10 @@ M.base46 = {
     ---| "'grug_far'"
     ---| "'hop'"
     ---| "'leap'"
-    ---| "'lsp'"
+    lsp = { enabled = false },
+    mason = { enabled = false },
     ---| "'lspsaga'"
     ---| "'markview'"
-    ---| "'mason'"
     ---| "'mini-tabline'"
     ---| "'navic'"
     ---| "'neogit'"
@@ -57,9 +60,8 @@ M.base46 = {
     ---| "'syntax'"
     ---| "'tbline'"
     telescope = { enabled = false },
-    ---| "'tiny-inline-diagnostic'"
+    -- "tiny-inline-diagnostic"={enabled=false},
     ---| "'todo'"
-    ---| "'treesitter'"
     ---| "'trouble'"
     ---| "'vim-illuminate'"
     whichkey = { enabled = false },
@@ -68,14 +70,15 @@ M.base46 = {
 
 M.nvdash = { load_on_startup = false }
 M.ui = {
-
-  tabufline = {
+  telescope = {
     enabled = false,
   },
+
   statusline = {
     theme = "minimal",
   },
   cmp = {
+
     icons = false,
     icons_left = false,
     style = "flat_dark",
@@ -86,6 +89,5 @@ M.ui = {
     abbr_maxwidth = 80,
   },
 }
-M.plugins = require "custom.plugins.diagnostic"
 
 return M
