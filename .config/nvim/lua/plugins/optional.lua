@@ -1,4 +1,5 @@
 local toggle = require "configs.pde"
+
 return {
   {
     "supermaven-inc/supermaven-nvim",

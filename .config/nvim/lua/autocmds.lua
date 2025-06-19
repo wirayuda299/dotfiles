@@ -11,16 +11,11 @@ local function opts(desc, bufnr)
   }
 end
 
-local showDiagnosticSums = function()
-  require("troublesum").show()
-end
-
 autocmd("LspAttach", {
   group = augroup "lsp_attach",
   callback = function(e)
     local map = vim.keymap.set
     local bufnr = e.buf
-    showDiagnosticSums()
 
     map("n", "<leader>ws", function()
       vim.lsp.buf.workspace_symbol()

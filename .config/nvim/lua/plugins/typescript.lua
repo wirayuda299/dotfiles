@@ -9,6 +9,7 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+    ft = { "typescript", "typescriptreact" },
     opts = {
       tsserver_file_preferences = {
         includeInlayParameterNameHints = "all",

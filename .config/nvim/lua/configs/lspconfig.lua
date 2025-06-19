@@ -9,6 +9,7 @@ local servers = {
   "tailwindcss",
   "lua_ls",
   "ts_ls",
+  "biome"
   -- "emmet_ls",
 }
 
