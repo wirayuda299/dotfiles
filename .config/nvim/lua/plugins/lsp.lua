@@ -1,26 +1,25 @@
 return {
-  {
-    'VidocqH/lsp-lens.nvim',
-    event = "LspAttach",
-    config = function()
-      require 'lsp-lens'.setup({})
-    end
-  },
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      vim.diagnostic.config {
-        virtual_text = false,
-        float = {
-          focusable = false,
-          style = "minimal",
-          border = "rounded",
-          source = "if_many",
-          header = "",
-          prefix = "",
-        },
-      }
-      require "configs.lspconfig"
-    end,
-  }
+
+    {
+        "VidocqH/lsp-lens.nvim",
+        event = "LspAttach",
+        config = function()
+            require("lsp-lens").setup({})
+        end,
+    },
+
+    -- {
+    --     "ivanjermakov/troublesum.nvim",
+    --     event = "LspAttach",
+    --     config = function()
+    --         require("troublesum").setup()
+    --     end,
+    -- },
+    {
+        "dmmulroy/ts-error-translator.nvim",
+        ft = "javascript,typescript,typescriptreact,svelte,astro",
+        config = function()
+            require("ts-error-translator").setup()
+        end
+    },
 }
