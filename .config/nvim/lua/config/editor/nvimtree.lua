@@ -8,22 +8,20 @@ local options = {
     hijack_unnamed_buffer_when_opening = false,
 
     view = {
-        width = 30, -- Slightly wider for better path visibility
+        width = 30, -- WebStorm-like width
         side = "left",
         preserve_window_proportions = true,
         number = false,
         relativenumber = false,
-        signcolumn = "yes",
-        -- Add centralize_selection for better current file visibility
-        centralize_selection = true,
+        signcolumn = "no",            -- Clean WebStorm look
+        centralize_selection = false, -- WebStorm doesn't auto-center
+        adaptive_size = false,
         float = {
             enable = false,
             quit_on_focus_loss = true,
             open_win_config = {
                 relative = "editor",
-                border = "rounded",
-                width = 50,
-                height = 30,
+                border = "none", -- WebStorm has no borders
                 row = 1,
                 col = 1,
             },
@@ -37,9 +35,9 @@ local options = {
         full_name = false,
         highlight_opened_files = "name",
         highlight_modified = "name",
-        -- Better root folder display - shows actual path
+        -- Clean root folder display without emoji icons
         root_folder_label = function(path)
-            return "📁 " .. vim.fn.fnamemodify(path, ":~") .. "/"
+            return vim.fn.fnamemodify(path, ":~") .. "/"
         end,
         indent_width = 2,
         indent_markers = {
@@ -48,7 +46,7 @@ local options = {
             icons = {
                 corner = "└",
                 edge = "│",
-                item = "│",
+                item = "├",
                 bottom = "─",
                 none = " ",
             },
@@ -67,10 +65,10 @@ local options = {
                 modified = true,
             },
             glyphs = {
-                default = "󰈚",
+                default = "",
                 symlink = "",
-                bookmark = "󰆤",
-                modified = "󰷈",
+                bookmark = "",
+                modified = "●",
                 folder = {
                     arrow_closed = "",
                     arrow_open = "",
@@ -126,8 +124,11 @@ local options = {
             ".cache",
             "target",
             "vendor",
+            ".idea",   -- WebStorm config folder
+            "*.iml",   -- IntelliJ module files
+            ".vscode", -- VS Code config
         },
-        exclude = { ".gitignore", ".env" },
+        exclude = { ".gitignore", ".env", ".editorconfig" },
     },
 
     filesystem_watchers = {
@@ -178,7 +179,7 @@ local options = {
         },
         open_file = {
             quit_on_open = false,
-            resize_window = true,
+            resize_window = false, -- WebStorm keeps consistent sizing
             window_picker = {
                 enable = true,
                 picker = "default",

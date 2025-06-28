@@ -1,7 +1,6 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
--- Optimized cache system
 local cache = {
     colors = nil,
     highlights_applied = false,
@@ -9,7 +8,6 @@ local cache = {
     debounce_timer = nil,
 }
 
--- Lightweight theme detection with minimal API calls
 local function get_optimized_colors()
     local current_colorscheme = vim.g.colors_name or "default"
 

@@ -16,7 +16,7 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 
--- Clean modern UI
+-- Clean modern UI optimized for Darcula Dark
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes:1"     -- Single column for cleaner look
@@ -33,33 +33,40 @@ vim.opt.ruler = false
 vim.opt.laststatus = 3
 vim.opt.showtabline = 2
 
--- Clean fill characters (minimal and subtle)
+-- Darcula-optimized fill characters (clean lines that work well with dark theme)
 vim.opt.fillchars = {
     eob = " ", -- End of buffer (invisible)
-    fold = " ", -- Fold lines (clean)
-    foldopen = "-", -- Fold open
-    foldclose = "+", -- Fold close
+    fold = "·", -- Fold lines (subtle dot)
+    foldopen = "▼", -- Fold open (clear indicator)
+    foldclose = "▶", -- Fold close (clear indicator)
     foldsep = " ", -- Fold separator (invisible)
     diff = "╱", -- Diff deleted lines
-    msgsep = " ", -- Message separator (clean)
-    vert = "│", -- Vertical separator (thin line)
+    msgsep = "─", -- Message separator (horizontal line)
+    vert = "│", -- Vertical separator (clean line)
+    vertleft = "┤", -- Vertical left
+    vertright = "├", -- Vertical right
+    verthoriz = "┼", -- Vertical horizontal
+    horiz = "─", -- Horizontal
 }
 
--- Minimal list characters (optional, can be disabled)
-vim.opt.list = false -- Disable to keep it clean
--- vim.opt.listchars = {
---     tab = "  ",          -- Clean tab
---     trail = " ",         -- Clean trailing spaces
---     extends = " ",       -- Clean extends
---     precedes = " ",      -- Clean precedes
--- }
+-- Clean list characters for dark theme (optional, can be enabled)
+vim.opt.list = false -- Keep disabled for minimal look
+vim.opt.listchars = {
+    tab = "→ ", -- Clear tab indicator
+    trail = "·", -- Subtle trailing spaces
+    extends = "›", -- Clean extends
+    precedes = "‹", -- Clean precedes
+    nbsp = "␣", -- Non-breaking space
+    space = " ", -- Regular space (invisible)
+}
 
--- Simple fold settings
+-- Enhanced fold settings for Darcula
 vim.opt.foldmethod = "indent"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
-vim.opt.foldcolumn = "0" -- No fold column for cleaner look
+vim.opt.foldcolumn = "1" -- Minimal fold column that works well with dark theme
+vim.opt.foldtext = ""    -- Use default for better theme compatibility
 
 -- Editing
 vim.opt.expandtab = true
@@ -71,10 +78,10 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.linebreak = true
 vim.opt.breakindent = true
-vim.opt.showbreak = "" -- No line break indicator
+vim.opt.showbreak = "↳ " -- Clean line break indicator for dark theme
 vim.opt.cpoptions:append(">")
 
--- Search
+-- Search optimized for dark theme
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
@@ -95,11 +102,11 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = "screen"
 
--- Clean completion
+-- Clean completion optimized for Darcula
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c")
-vim.opt.pumblend = 0 -- No transparency for cleaner look
-vim.opt.winblend = 0 -- No transparency
+vim.opt.pumblend = 10 -- Slight transparency for modern look
+vim.opt.winblend = 0  -- No window transparency
 
 -- Scrolling
 vim.opt.scrolloff = 8
@@ -125,5 +132,5 @@ vim.opt.belloff = "all"
 vim.opt.visualbell = false
 vim.opt.errorbells = false
 
--- Clean syntax
+-- Enhanced syntax with better performance
 vim.cmd("syntax on")

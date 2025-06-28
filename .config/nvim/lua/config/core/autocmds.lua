@@ -83,3 +83,27 @@ autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.env*", "*.conf", "*.ini" },
     command = "setfiletype conf",
 })
+
+autocmd("ColorScheme", {
+    pattern = "darcula-dark",
+    callback = function()
+        -- Enhance certain highlight groups for better readability
+        vim.api.nvim_set_hl(0, "VertSplit", { fg = "#3A3A3A" })
+        vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#3A3A3A" })
+        vim.api.nvim_set_hl(0, "FoldColumn", { fg = "#606366", bg = "NONE" })
+        vim.api.nvim_set_hl(0, "LineNr", { fg = "#606366" })
+        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#A9B7C6", bold = true })
+    end,
+})
+
+-- Set better diff colors for Darcula
+autocmd("VimEnter", {
+    callback = function()
+        if vim.g.colors_name == "darcula-dark" then
+            vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#294436" })
+            vim.api.nvim_set_hl(0, "DiffChange", { bg = "#385570" })
+            vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#484A4A" })
+            vim.api.nvim_set_hl(0, "DiffText", { bg = "#4C5762" })
+        end
+    end,
+})
