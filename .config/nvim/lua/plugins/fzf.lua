@@ -12,4 +12,5 @@ return {
     opts = function()
         return require("config.editor.fzf")
     end,
+
 }

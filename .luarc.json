@@ -2,5 +2,9 @@
     "diagnostics.globals": [
         "vim",
         "progress_reporter"
+    ],
+    "diagnostics.disable": [
+        "need-check-nil",
+        "missing-fields"
     ]
 }

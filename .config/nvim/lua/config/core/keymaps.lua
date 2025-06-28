@@ -5,6 +5,12 @@ local opts = { silent = true }
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
+-- Keep cursor at end of visual selection after operations
+map("v", "y", "ygv<Esc>", { desc = "Yank and keep cursor at end" })
+map("v", "d", "dgv<Esc>", { desc = "Delete and keep cursor at end" })
+map("v", "c", "cgv<Esc>", { desc = "Change and keep cursor at end" })
+map("v", "x", "xgv<Esc>", { desc = "Delete and keep cursor at end" })
+
 map("n", "<C-Left>", "<C-w>h", { desc = "Go to Left Window", remap = true })
 map("n", "<C-Down>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
 map("n", "<C-Up>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
@@ -21,7 +27,7 @@ map({ "n", "x" }, "<leader>fm", function()
 end, { desc = "general format file" })
 
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
--- map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+map({ "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
 map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down" })
 map("n", "<A-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = "Move Up" })

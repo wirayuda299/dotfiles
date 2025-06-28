@@ -1,8 +1,10 @@
 vim.loader.enable()
 
 vim.g.mapleader = " "
+vim.defer_fn(function()
+    require("config.core.lsp").defaults()
+end, 100)
 
-require("config.core.lsp").defaults()
 require("config.core.options")
 require("config.core.autocmds")
 

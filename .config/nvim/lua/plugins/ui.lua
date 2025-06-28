@@ -13,24 +13,19 @@ return {
 
     {
         "wirayuda09/tabzen",
-        event = { "BufReadPre", "BufNewFile" },
+        event = "VeryLazy",
         config = function()
             require("tabzen").setup({
-                max_tab_width = 25,
-                show_tab_numbers = true,
                 keymaps = {
-                    next_tab = "<Tab>",
-                    prev_tab = "<S-Tab>",
                     close_tab = "<leader>x",
                 }
             })
         end
     },
 
-
     {
         "lewis6991/gitsigns.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        event = "VeryLazy",
         opts = function()
             return require("config.ui.git")
         end
@@ -46,9 +41,31 @@ return {
 
     {
         "nvimdev/indentmini.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        event = "VeryLazy",
         config = function()
-            require("indentmini").setup()
+            require("indentmini").setup({
+                char = "│",
+                exclude = {
+                    "help",
+                    "alpha",
+                    "dashboard",
+                    "neo-tree",
+                    "Trouble",
+                    "trouble",
+                    "lazy",
+                    "mason",
+                    "notify",
+                    "toggleterm",
+                    "lazyterm",
+                },
+            })
+
+            -- Brighter indent line for darcula-dark theme
+            vim.cmd('highlight IndentLine guifg=#5a5a5a') -- Good balance for darcula
+            -- Alternative options for darcula-dark:
+            -- vim.cmd('highlight IndentLine guifg=#6a6a6a')  -- Brighter
+            -- vim.cmd('highlight IndentLine guifg=#808080')  -- Even more visible
+            -- vim.cmd('highlight IndentLine guifg=#4f5b66')  -- Slightly blue-tinted (matches darcula's UI)
         end,
     },
     {
@@ -66,9 +83,7 @@ return {
         priority = 1000,
         lazy = false,
         config = function()
-            vim.schedule(function()
-                vim.cmd.colorscheme("darcula-dark")
-            end)
+            vim.cmd.colorscheme("darcula-dark")
         end
     }
 }

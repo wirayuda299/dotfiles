@@ -3,7 +3,7 @@ return {
     dependencies = {
         "kevinhwang91/promise-async",
     },
-    event = "BufRead",
+    event = "VeryLazy",
     keys = {
         { "zm", function() require("ufo").closeAllFolds() end, desc = "󱃄 Close All Folds" },
         {

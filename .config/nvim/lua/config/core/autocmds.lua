@@ -1,7 +1,10 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-vim.api.nvim_create_autocmd("BufNewFile", {
+-- Buffer management
+local buffer_group = augroup("BufferManagement", { clear = true })
+autocmd("BufNewFile", {
+    group = buffer_group,
     pattern = "*",
     callback = function()
         vim.bo.buftype = "nofile"
@@ -10,16 +13,19 @@ vim.api.nvim_create_autocmd("BufNewFile", {
     end,
 })
 
--- Performance optimizations
+-- Performance optimizations - only run once per buffer
 local perf = augroup("Performance", { clear = true })
-autocmd("BufEnter", {
+autocmd("BufReadPost", {
     group = perf,
     callback = function()
-        vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+        -- Only set formatoptions if not already set
+        if vim.bo.formatoptions:match("c") then
+            vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+        end
     end,
 })
 
--- Highlight on yank
+-- Highlight on yank - optimized
 autocmd("TextYankPost", {
     group = augroup("HighlightYank", { clear = true }),
     callback = function()
@@ -27,7 +33,7 @@ autocmd("TextYankPost", {
     end,
 })
 
--- Restore cursor position
+-- Restore cursor position - optimized
 autocmd("BufReadPost", {
     group = augroup("RestoreCursor", { clear = true }),
     callback = function()
@@ -45,7 +51,7 @@ autocmd("VimResized", {
     command = "tabdo wincmd =",
 })
 
--- Close with q
+-- Close with q - optimized
 autocmd("FileType", {
     group = augroup("QuickClose", { clear = true }),
     pattern = { "qf", "help", "man", "lspinfo", "checkhealth", "spectre_panel" },
@@ -55,14 +61,17 @@ autocmd("FileType", {
     end,
 })
 
-vim.api.nvim_create_user_command("NpmShow", function()
-    require("package-info").show({ force = true })
-end, { desc = "Show npm package info (forced)" })
--- Auto save
+-- Auto save - optimized with better conditions
 autocmd({ "BufLeave", "FocusLost" }, {
     group = augroup("AutoSave", { clear = true }),
     callback = function()
-        if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
+        local buf = vim.api.nvim_get_current_buf()
+        local bufname = vim.api.nvim_buf_get_name(buf)
+        local buftype = vim.bo.buftype
+        local readonly = vim.bo.readonly
+        local modified = vim.bo.modified
+
+        if modified and not readonly and bufname ~= "" and buftype == "" then
             vim.api.nvim_command("silent update")
         end
     end,

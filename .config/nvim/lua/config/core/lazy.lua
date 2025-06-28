@@ -8,42 +8,67 @@ local options = {
             reset = true,
             paths = {},
             disabled_plugins = {
-                "2html_plugin",
-                "tohtml",
-                "getscript",
-                "getscriptPlugin",
-                "gzip",
-                "logipat",
+                -- File management
                 "netrw",
                 "netrwPlugin",
-                "vimopts",
-                "illuminate",
                 "netrwSettings",
                 "netrwFileHandlers",
-                "matchit",
+
+                -- Archive handling
+                "gzip",
                 "tar",
                 "tarPlugin",
-                "rrhelper",
-                "spellfile_plugin",
+                "zip",
+                "zipPlugin",
                 "vimball",
                 "vimballPlugin",
-                "zip",
+
+                -- HTML/conversion
+                "2html_plugin",
+                "tohtml",
+
+                -- Script fetching
+                "getscript",
+                "getscriptPlugin",
+
+                -- Matching/syntax (if using treesitter)
+                "matchit",
                 "matchparen",
-                "zipPlugin",
-                "tutor",
-                "rplugin",
                 "syntax",
                 "synmenu",
+
+                -- Misc utilities
+                "logipat",
+                "tutor",
                 "optwin",
                 "compiler",
                 "bugreport",
+                "rrhelper",
+                "spellfile_plugin",
+                "rplugin",
                 "ftplugin",
             },
         },
     },
     defaults = {
         lazy = true,
-        version = false,
+        version = false, -- Use latest commits for faster updates
+    },
+    -- Additional performance options
+    install = {
+        missing = true,
+    },
+    checker = {
+        enabled = false, -- Disable automatic update checking
+        notify = false,
+    },
+    change_detection = {
+        enabled = false, -- Disable config change detection
+        notify = false,
+    },
+    ui = {
+        backdrop = 100, -- Fully opaque backdrop for better performance
     },
 }
+
 return options
