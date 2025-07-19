@@ -1,108 +1,36 @@
-[bell]
-animation = "EaseOutExpo"
-duration = 0
-
-[colors]
-draw_bold_text_with_bright_colors = true
-
-# One Dark Pro specific indexed colors
-[[colors.indexed_colors]]
-index = 16
-color = "0xD19A66"
-
-[[colors.indexed_colors]]
-index = 17
-color = "0xBE5046"
-
-[colors.primary]
-background = "0x1E2127"  # Slightly darker background
-foreground = "0xABB2BF"
-
-[colors.normal]
-black   = "0x1E2127"  # Match background
-red     = "0xE06C75"
-green   = "0x98C379"
-yellow  = "0xE5C07B"
-blue    = "0x61AFEF"
-magenta = "0xC678DD"
-cyan    = "0x56B6C2"
-white   = "0xABB2BF"
-
-[colors.bright]
-black   = "0x5C6370"
-red     = "0xFF7A85"  # Brighter version
-green   = "0xB5E890"  # Brighter version
-yellow  = "0xFFD68A"  # Brighter version
-blue    = "0x69B4FF"  # Brighter version
-magenta = "0xD886F3"  # Brighter version
-cyan    = "0x6CD1DF"  # Brighter version
-white   = "0xFFFFFF"
-
-[colors.cursor]
-cursor = "0x528BFF"
-text   = "0x1E2127"  # Match background
-
-[cursor]
-blink_interval = 500
-blink_timeout = 5
-unfocused_hollow = false
-
-[cursor.style]
-blinking = "Off"
-shape = "Block"
-
-[env]
-TERM = "xterm-256color"
+# Minimal Alacritty config
+[window]
+padding = { x = 0, y = 0 }
+opacity = 0.95
 
 [font]
-size = 14
+size = 13.0
+#
+# [font.normal]
+# family = "JetBrainsMono Nerd Font Mono"
+# style = "Regular"
+#
+[colors.primary]
+background = "#1e1e1e"
+foreground = "#d4d4d4"
+ 
+[colors.normal]
+black = "#1e1e1e"
+red = "#f44747"
+green = "#4ec9b0"
+yellow = "#ffcc02"
+blue = "#3794ff"
+magenta = "#b267e6"
+cyan = "#4ec9b0"
+white = "#d4d4d4"
 
-[font.bold]
-family = "JetBrainsMono Nerd Font"
-style = "Bold"
+[cursor]
+style = { shape = "Block" }
 
-[font.italic]
-family = "JetBrainsMono Nerd Font"
-
-[font.normal]
-family = "JetBrainsMono Nerd Font"
-style = "Regular"
-
-[font.offset]
-x = 0
-y = 0
-
-[font.glyph_offset]
-x = 0
-y = 0
-
-[mouse]
-hide_when_typing = true
-
-[[mouse.bindings]]
-mouse = "Middle"
-action = "PasteSelection"
-
-[selection]
-semantic_escape_chars = ",│`|:\"' ()[]{}<>"
-
-[terminal]
-shell.program = "/bin/zsh"
-
-[window]
-opacity = 1
-decorations = "none"
-decorations_theme_variant = "Dark"
-dynamic_title = true
-title = ""
-
-[window.dimensions]
-columns = 160
-lines = 80
-
-[window.padding]
-x = 0
-y = 0
-
-[general]
-live_config_reload = true
+[keyboard]
+bindings = [
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+  { key = "Plus", mods = "Control", action = "IncreaseFontSize" },
+  { key = "Minus", mods = "Control", action = "DecreaseFontSize" },
+]

@@ -1,10 +1,18 @@
 {
+    "Lua.workspace.checkThirdParty": false,
+  "Lua.workspace.library": [
+    "/usr/share/nvim/runtime/lua",
+    "/usr/share/nvim/runtime/lua/vim/lsp"
+  ],
+  "Lua.completion.enable": true,
     "diagnostics.globals": [
         "vim",
         "progress_reporter"
     ],
     "diagnostics.disable": [
         "need-check-nil",
-        "missing-fields"
+        "missing-fields",
+        "different-requires",
+        "undefined-field"
     ]
 }
