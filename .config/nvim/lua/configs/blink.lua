@@ -1,14 +1,8 @@
 local opts = {
-  snippets = { preset = "luasnip" },
-  cmdline = { enabled = true },
   appearance = { nerd_font_variant = "normal" },
   fuzzy = { implementation = "prefer_rust" },
   sources = {
     default = { "lsp", "snippets", "path" },
-    lsp = { max_items = 8 },     -- Reduced from 10
-    path = { max_items = 8 },    -- Reduced from 10
-    snippets = { max_items = 8 } -- Reduced from 10
-
   },
 
   keymap = {

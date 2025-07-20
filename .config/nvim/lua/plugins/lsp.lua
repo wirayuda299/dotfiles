@@ -61,42 +61,6 @@ return {
           }
         end,
 
-        ["lua_ls"] = function()
-          lspcfg.lua_ls.setup {
-            on_attach = function(client, bufnr)
-              if not should_attach_lsp(bufnr) then
-                vim.lsp.buf_detach_client(bufnr, client.id)
-                return
-              end
-              client.server_capabilities.semanticTokensProvider = nil
-            end,
-            flags = {
-              debounce_text_changes = 200,
-            },
-            settings = {
-              Lua = {
-                format = {
-                  enable = true,
-                  defaultConfig = {
-                    indent_style = "space",
-                    indent_size = "2",
-                  }
-                },
-                workspace = {
-                  checkThirdParty = false,
-                  maxPreload = 500,      -- Reduced from 1000
-                  preloadFileSize = 500, -- Reduced from 1000
-                },
-                diagnostics = {
-                  workspaceDelay = 2000, -- Increased from 1000
-                },
-                semantic = {
-                  enable = false,
-                },
-              }
-            }
-          }
-        end,
       },
     })
 

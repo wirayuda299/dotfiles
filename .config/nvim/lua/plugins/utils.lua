@@ -1,15 +1,14 @@
 return {
 
   {
-    dir = "~/Desktop/numb",
+    "wirayuda299/numb",
     name = "numb",
     event = "CmdLineEnter"
   },
 
   {
 
-    dir = "~/Desktop/harpoon",
-    name = "harpoon",
+    "wirayuda299/harppon",
     cmd = { "MarkAdd", "MarkFloat", "MarkJump", "MarkRemove" },
   },
 

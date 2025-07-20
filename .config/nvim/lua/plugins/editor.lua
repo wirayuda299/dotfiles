@@ -3,13 +3,15 @@ return {
   ---@module 'oil'
   ---@type oil.SetupOpts
   opts = {
-
-    float={
-
-  max_width = 0.4,
-    max_height = 0.4,
+    default_file_explorer = true,
+    view_options = {
+      show_hidden = true,
+    },
+    float = {
+      max_width = 0.5,
+      max_height = 0.5,
     }
 
   },
-  cmd={"Oil"}
+  cmd = { "Oil" }
 }

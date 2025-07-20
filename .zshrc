@@ -63,12 +63,10 @@ bindkey '^[w' kill-region
 alias ff="firefox > /dev/null 2>&1 & disown"
 alias nv="nvim > /dev/null 2>&1 & disown"
 alias lg="lazygit > /dev/null 2>&1 & disown"
-alias c="code > /dev/null 2>&1 & disown"
 alias ht="htop > /dev/null 2>&1 & disown"
 alias br="brave > /dev/null 2>&1 & disown"
 alias db="dbeaver > /dev/null 2>&1 & disown"
 alias api="insomnia > /dev/null 2>&1 & disown"
-alias ch="google-chrome-stable > /dev/null 2>&1 & disown"
 
 # History
 HISTSIZE=5000
@@ -130,6 +128,6 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH=$PATH:/usr/share/playonlinux4/
 
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
