@@ -7,12 +7,15 @@
   "Lua.completion.enable": true,
     "diagnostics.globals": [
         "vim",
-        "progress_reporter"
+        "progress_reporter",
+        "jit"
     ],
     "diagnostics.disable": [
         "need-check-nil",
         "missing-fields",
         "different-requires",
-        "undefined-field"
+        "undefined-field",
+        "inject-field",
+        "undefined-doc-name"
     ]
 }

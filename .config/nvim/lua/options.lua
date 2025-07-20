@@ -12,12 +12,11 @@ vim.api.nvim_set_hl(0, "WinSeparator", { bg = "none" })
 local opt = vim.opt
 local o = vim.o
 local g = vim.g
-vim.opt.cmdheight = 0
 -------------------------------------- options ------------------------------------------
 o.laststatus = 3
 o.showmode = false
 o.splitkeep = "screen"
-
+opt.guicursor = ""
 o.clipboard = "unnamedplus"
 o.cursorline = true
 o.cursorlineopt = "number"
@@ -26,6 +25,13 @@ o.shiftwidth = 2
 o.smartindent = true
 o.tabstop = 2
 o.softtabstop = 2
+opt.list = true
+
+opt.cmdheight = 0
+opt.listchars = {
+  tab = "│ ", -- Show tabs as vertical line + space
+  leadmultispace = "│" .. string.rep(" ", vim.o.shiftwidth - 1), -- Show leading spaces as indent guides
+}
 
 opt.fillchars = { eob = " " }
 o.ignorecase = true
@@ -35,24 +41,18 @@ o.mouse = "a"
 o.number = true
 o.numberwidth = 2
 o.ruler = false
-
--- disable nvim intro
 opt.shortmess:append "sI"
-
-o.signcolumn = "yes"
+o.signcolumn = "no"
 o.splitbelow = true
 o.splitright = true
 o.timeoutlen = 400
 o.undofile = true
-
--- interval for writing swap file to disk, also used by gitsigns
-o.updatetime = 250
+opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+o.updatetime = 50
 opt.wrap = false
--- go to previous/next line with h,l,left arrow and right arrow
--- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"
-
--- disable some default providers
+opt.hlsearch = false
+opt.incsearch = true
 g.loaded_node_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0
