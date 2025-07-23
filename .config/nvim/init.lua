@@ -76,13 +76,11 @@ require("lazy").setup({
       dir = "~/Desktop/numb",
       name = "numb",
       event = "CmdLineEnter",
-      dev = true,
     },
     {
       dir = "~/Desktop/harpoon",
       name = "harpoon",
       cmd = { "MarkAdd", "MarkFloat", "MarkJump", "MarkRemove" },
-      dev = true,
       keys = {
         { "<leader>ma", "<cmd>MarkAdd<cr>",    silent = true },
         { "<leader>mf", "<cmd>MarkFloat<cr>",  silent = true },
