@@ -1,7 +1,6 @@
 vim.loader.enable()
 
 vim.g.mapleader = " "
-vim.cmd("colorscheme default")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -15,6 +14,17 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
+    {
+      "olimorris/onedarkpro.nvim",
+      lazy = false,
+      priority = 1000, -- Ensure it loads first
+      opts = {
+        options = {
+          transparency = true
+        }
+
+      }
+    },
     {
       "ibhagwan/fzf-lua",
       keys = {
@@ -73,12 +83,11 @@ require("lazy").setup({
     },
 
     {
-      dir = "~/Desktop/numb",
-      name = "numb",
+      "wirayuda299/numb",
       event = "CmdLineEnter",
     },
     {
-      dir = "~/Desktop/harpoon",
+      "wirayuda299/harppon",
       name = "harpoon",
       cmd = { "MarkAdd", "MarkFloat", "MarkJump", "MarkRemove" },
       keys = {
@@ -203,22 +212,4 @@ require("autocmds")
 vim.schedule(function()
   require("keymaps")
 end)
-
-vim.diagnostic.config({
-  signs = false,
-  virtual_text = {
-    spacing = 2,
-    source = false,
-  },
-  float = {
-    focusable = false,
-    style = "minimal",
-    border = "none",
-    source = "if_many",
-    header = "",
-    prefix = "",
-    max_width = 80,
-  },
-  update_in_insert = false,
-  severity_sort = true,
-})
+vim.cmd("colorscheme onedark_dark")

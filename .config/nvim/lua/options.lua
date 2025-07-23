@@ -1,16 +1,15 @@
---
--- local set_hl = vim.api.nvim_set_hl
---
--- set_hl(0, "Normal", { bg = "none" })
--- set_hl(0, "NormalFloat", { bg = "none" })
--- set_hl(0, "SignColumn", { bg = "none" })
--- set_hl(0, "LineNr", { bg = "none" })
--- set_hl(0, "CursorLineNr", { bg = "none" })
--- set_hl(0, "EndOfBuffer", { bg = "none" })
--- set_hl(0, "StatusLine", { bg = "none" })
--- set_hl(0, "StatusLineNC", { bg = "none" })
--- set_hl(0, "WinSeparator", { bg = "none" })
---
+local set_hl = vim.api.nvim_set_hl
+
+set_hl(0, "Normal", { bg = "none" })
+set_hl(0, "NormalFloat", { bg = "none" })
+set_hl(0, "SignColumn", { bg = "none" })
+set_hl(0, "LineNr", { bg = "none" })
+set_hl(0, "CursorLineNr", { bg = "none" })
+set_hl(0, "EndOfBuffer", { bg = "none" })
+set_hl(0, "StatusLine", { bg = "none" })
+set_hl(0, "StatusLineNC", { bg = "none" })
+set_hl(0, "WinSeparator", { bg = "none" })
+
 
 local opt = vim.opt
 local o = vim.o

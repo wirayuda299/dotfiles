@@ -19,15 +19,6 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Add Node.js and npm global packages to PATH
-export PATH="/home/wirayuda/.nvm/versions/node/v20.17.0/bin:$PATH"
-export PATH="$HOME/.local/share/gem/ruby/3.3.0/bin:$PATH"
-
-# Set up Android SDK
-export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$PATH
-
 # Load Powerlevel10k
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
@@ -101,34 +92,10 @@ fi
 eval "$(zoxide init --cmd cd zsh)"
 export PATH=$HOME/go/bin:$PATH
 
-# pnpm
-export PNPM_HOME="/home/wirayuda/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-
 export PATH=$HOME/.local/bin:$PATH
 
-# SDKMAN
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-# Source the Lazyman shell initialization for aliases and nvims selector
-# shellcheck source=.config/nvim-Lazyman/.lazymanrc
-[ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
-# Source the Lazyman .nvimsbind for nvims key binding
-# shellcheck source=.config/nvim-Lazyman/.nvimsbind
-[ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
+export GEMINI_API_KEY="AIzaSyDDdYJmycuhnZe01npFSLo506jBQiORjXw"
 
-# bun completions
-[ -s "/home/wirayuda/.bun/_bun" ] && source "/home/wirayuda/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH=$PATH:/usr/share/playonlinux4/
-
-export NVM_DIR="$HOME/.config/nvm"
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export GEMINI_API_KEY="AIzaSyDDdYJmycuhnZe01npFSLo506jBQiORjXw"

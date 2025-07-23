@@ -105,6 +105,7 @@ autocmd("LspAttach", {
     local bufnr = args.buf
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     local map = require("utils").map
+    require("utils").diagnostics()
 
 
     map('gd', vim.lsp.buf.definition, 'Goto Definition', 'n', bufnr)
