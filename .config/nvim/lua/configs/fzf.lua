@@ -12,13 +12,7 @@ return {
   previewers = {
     builtin = {
       syntax = false,
-      syntax_limit_b = 1024 * 50,
-      limit_b = 1024 * 1024 * 1,
       treesitter = { enabled = false }
-    },
-    bat = {
-      cmd = "bat",
-      args = "--color=always --style=numbers --line-range=:100",
     },
   },
   winopts = {

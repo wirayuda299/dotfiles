@@ -1,5 +1,5 @@
 return {
-  defaults = { lazy = true },
+  defaults = { lazy = true, version = false, },
   install = { colorscheme = { "default" } },
   checker = { enabled = false },
   change_detection = { enabled = false },

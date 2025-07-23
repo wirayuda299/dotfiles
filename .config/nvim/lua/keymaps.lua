@@ -1,7 +1,6 @@
 local map = vim.keymap.set
 
-map("x", "p", '"_dP', { silent = true })
-map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
+map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy", silent = true })
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 map("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer", silent = true })
 map("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer", silent = true })
@@ -26,12 +25,4 @@ map("v", "<A-Down>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { de
 map("i", "<A-Up>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
 map("i", "<A-Down>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 map("v", "<A-Up>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
-map("n", "<leader>ma", "<cmd>MarkAdd<cr>", { desc = "Add mark", silent = true })
-map("n", "<leader>mf", "<cmd>MarkFloat<cr>", { desc = "Show list of mark", silent = true })
-map("n", "<leader>mr", "<cmd>MarkRemove<cr>", { desc = "Delete mark", silent = true })
-map("n", "<leader>1", "<cmd>MarkJump 1<cr>", { silent = true })
-map("n", "<leader>2", "<cmd>MarkJump 2<cr>", { silent = true })
-map("n", "<leader>3", "<cmd>MarkJump 3<cr>", { silent = true })
-map("n", "<leader>4", "<cmd>MarkJump 4<cr>", { silent = true })
-map("n", "<leader>5", "<cmd>MarkJump 5<cr>", { silent = true })
-map("n", "<leader>e", "<cmd>Oil<cr>", { silent = true })
+map("n", "<C-d>", "<cmd>DBUIToggle<cr>", { silent = true })

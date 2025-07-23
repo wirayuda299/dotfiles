@@ -1,0 +1,77 @@
+[general]
+live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding = { x = 0, y = 0 }  # Zero padding for max performance
+dynamic_padding = false
+decorations = "Full"
+opacity = 0.9
+startup_mode = "Windowed"
+position = { x = 240, y = 240 }
+
+class = { instance = "Alacritty", general = "Alacritty" }
+decorations_theme_variant = "Dark"
+
+[scrolling]
+# Smooth scrolling configuration
+history = 5000
+multiplier = 1        # Reduced for smoother scrolling
+
+[font]
+size = 12.0
+builtin_box_drawing = true
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "FiraCode Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "FiraCode Nerd Font"
+style = "Italic"
+
+[font.bold_italic]
+family = "FiraCode Nerd Font"
+style = "Bold Italic"
+
+# Optional: Enable font ligatures if supported
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.offset]
+x = 0
+y = 0
+
+[colors]
+draw_bold_text_with_bright_colors = false
+transparent_background_colors = false
+
+[bell]
+animation = "Linear"
+duration = 0
+
+[cursor]
+unfocused_hollow = true
+thickness = 0.1
+
+[cursor.style]
+shape = "Block"
+blinking = "Never"
+
+[mouse]
+hide_when_typing = true
+
+[selection]
+save_to_clipboard = true
+
+[terminal]
+shell = { program = "/usr/bin/zsh" }
+
+

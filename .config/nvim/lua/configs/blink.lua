@@ -1,8 +1,44 @@
 local opts = {
-  appearance = { nerd_font_variant = "normal" },
+  appearance = {
+    nerd_font_variant = "mono",
+    kind_icons = {
+      Text = "󰉿",
+      Method = "󰆧",
+      Function = "󰊕",
+      Constructor = "󰛡",
+      Field = "󰜢",
+      Variable = "󰀫",
+      Class = "󰠱",
+      Interface = "󰜰",
+      Module = "󰏗",
+      Property = "󰜢",
+      Unit = "󰑭",
+      Value = "󰎠",
+      Enum = "󰒻",
+      Keyword = "󰌋",
+      Snippet = "󰅴",
+      Color = "󰏘",
+      File = "󰈙",
+      Reference = "󰈇",
+      Folder = "󰉋",
+      EnumMember = "󰒻",
+      Constant = "󰏿",
+      Struct = "󰙅",
+      Event = "󱐋",
+      Operator = "󰆕",
+      TypeParameter = "󰊄",
+    }
+  },
+
   fuzzy = { implementation = "prefer_rust" },
+
   sources = {
     default = { "lsp", "snippets", "path" },
+    providers = {
+      lsp = { score_offset = 1000 },
+      snippets = { score_offset = 500 },
+      path = { score_offset = 100 },
+    }
   },
 
   keymap = {
@@ -13,22 +49,35 @@ local opts = {
     ["<Down>"] = { "select_next", "snippet_forward", "fallback" },
     ["<Up>"] = { "select_prev", "snippet_backward", "fallback" },
     ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+    ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+    ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
   },
 
   completion = {
-    -- ghost_text = { enabled = true },
+    ghost_text = { enabled = false },
+
     documentation = {
       auto_show = true,
-      auto_show_delay_ms = 200,
-      window = { border = "single" },
+      auto_show_delay_ms = 150,
+      window = {
+        border = "rounded",
+        winblend = 10,
+        winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder",
+        max_width = 80,
+        max_height = 20,
+      },
     },
-    list = { max_items = 8 },
-    menu = {
-      scrollbar = false,
-      border = "single",
 
+    list = {
+      max_items = 8,
+    },
+
+    menu = {
+      border = "none",
+      scrollbar = false,
     }
   },
+
 }
 
 return opts

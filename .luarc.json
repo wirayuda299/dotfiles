@@ -2,7 +2,8 @@
     "Lua.workspace.checkThirdParty": false,
   "Lua.workspace.library": [
     "/usr/share/nvim/runtime/lua",
-    "/usr/share/nvim/runtime/lua/vim/lsp"
+    "/usr/share/nvim/runtime/lua/vim/lsp",
+ "${3rd}/love2d/library"
   ],
   "Lua.completion.enable": true,
     "diagnostics.globals": [
@@ -14,7 +15,6 @@
         "need-check-nil",
         "missing-fields",
         "different-requires",
-        "undefined-field",
         "inject-field",
         "undefined-doc-name"
     ]
