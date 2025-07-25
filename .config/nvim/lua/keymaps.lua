@@ -1,6 +1,5 @@
 local map = vim.keymap.set
 
-map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy", silent = true })
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 map("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer", silent = true })
 map("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer", silent = true })
@@ -26,3 +25,4 @@ map("i", "<A-Up>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
 map("i", "<A-Down>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 map("v", "<A-Up>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
 map("n", "<C-d>", "<cmd>DBUIToggle<cr>", { silent = true })
+map("n", "<C-t>", "<cmd>ToggleTerm<cr>", { silent = true })

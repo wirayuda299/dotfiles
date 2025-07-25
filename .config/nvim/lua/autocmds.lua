@@ -7,6 +7,7 @@ local formatting_group = augroup("Formatting", { clear = true })
 local performance_group = augroup("Performance", { clear = true })
 
 -------------------------------------- general autocommands ------------------------------------------
+
 autocmd("TextYankPost", {
   group = general_group,
   desc = "Highlight yanked text",
@@ -40,25 +41,13 @@ autocmd("FileType", {
   end
 })
 
-autocmd("BufReadPost", {
-  group = general_group,
-  desc = "Restore cursor position",
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local line_count = vim.api.nvim_buf_line_count(0)
-    if mark[1] > 0 and mark[1] <= line_count then
-      vim.api.nvim_win_set_cursor(0, mark)
-    end
-  end
-})
-
 -- Close certain filetypes with 'q'
 autocmd("FileType", {
   group = general_group,
   desc = "Close certain filetypes with 'q'",
   pattern = {
     "help", "lspinfo", "man", "checkhealth", "qf", "query",
-    "notify", "tsplayground", "spectre_panel", "startuptime", "oil", "dadbod"
+    "notify", "tsplayground", "spectre_panel", "startuptime", "oil", "dadbod", "telescope"
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -74,19 +63,6 @@ autocmd("FileType", {
     vim.opt_local.formatoptions:remove({ "c", "r", "o" })
   end
 })
-
--- Auto-save when focus is lost
-autocmd("FocusLost", {
-  group = general_group,
-  desc = "Auto-save on focus lost",
-  callback = function()
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" then
-      vim.cmd("silent! wall")
-    end
-  end,
-})
-
--- Close quickfix with last window
 autocmd("WinEnter", {
   group = general_group,
   desc = "Close quickfix if it's the last window",
@@ -106,7 +82,12 @@ autocmd("LspAttach", {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     local map = require("utils").map
     require("utils").diagnostics()
-
+    if client and client.name == 'ts_ls' then
+      vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx)
+        require("ts-error-translator").translate_diagnostics(err, result, ctx)
+        vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
+      end
+    end
 
     map('gd', vim.lsp.buf.definition, 'Goto Definition', 'n', bufnr)
     map('gr', vim.lsp.buf.references, 'Goto References', 'n', bufnr)
@@ -144,14 +125,13 @@ autocmd("LspAttach", {
 autocmd("BufWritePre", {
   group = formatting_group,
   desc = "Format on save",
-  pattern = { "*.lua", "*.js", "*.ts", "*.jsx", "*.tsx", "*.go", "*.json" },
   callback = function(args)
     local clients = vim.lsp.get_clients({ bufnr = args.buf })
     for _, client in ipairs(clients) do
-      if client.supports_method("textDocument/formatting") then
+      if client.supports_method("textDocument/formatting", tostring(args.buf) or "0") then
         vim.lsp.buf.format({
           bufnr = args.buf,
-          async = false, -- Changed to false to ensure completion before save
+          async = true, -- Changed to false to ensure completion before save
           timeout_ms = 2000,
           filter = function(c)
             return c.id == client.id
@@ -198,6 +178,3 @@ autocmd("RecordingLeave", {
     vim.opt.cmdheight = 0
   end,
 })
-
--- User command for diagnostic list
-vim.api.nvim_create_user_command("DiagnosticList", vim.diagnostic.setqflist, { bang = true })

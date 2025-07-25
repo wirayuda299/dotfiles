@@ -13,8 +13,7 @@ return {
         "synmenu", "optwin", "compiler", "bugreport", "ftplugin", "syntax", "nvim-treesitter",
         "2html_plugin", "getscript", "getscriptPlugin", "logipat", "tar", "rrhelper", "netrw",
         "netrwplugin", "spellfile_plugin", "vimball", "vimballPlugin", "zip", "netrw", "netrwPlugin", "osc52", "shada",
-        "spellfile", "man"
-      }
+        "spellfile", "man", "filetype", "shada", "spellfile", "vimball", "zipPlugin" }
     },
   },
 }

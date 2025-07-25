@@ -1,16 +1,19 @@
 local M = {}
-
+local file_cache = {}
 function M.should_attach_lsp(bufnr)
-  local max_filesize = 100 * 1024 -- 100KB
+  local max_filesize = 100 * 1024
   local name = vim.api.nvim_buf_get_name(bufnr)
   if name == "" or name:match("^%w+://") then
     return false
   end
-  local ok, stats = pcall(vim.uv.fs_stat, name)
-  if ok and stats and stats.size > max_filesize then
-    return false
+
+  -- Cache file size checks
+  if file_cache[name] == nil then
+    local ok, stats = pcall(vim.uv.fs_stat, name)
+    file_cache[name] = (ok and stats and stats.size <= max_filesize) or false
   end
-  return true
+
+  return file_cache[name]
 end
 
 function M.map(keys, func, desc, mode, bufnr)

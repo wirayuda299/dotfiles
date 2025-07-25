@@ -16,14 +16,22 @@ class = { instance = "Alacritty", general = "Alacritty" }
 decorations_theme_variant = "Dark"
 
 [scrolling]
-# Smooth scrolling configuration
 history = 5000
-multiplier = 1        # Reduced for smoother scrolling
+multiplier = 1 
 
 [font]
-size = 12.5
+size = 11
 builtin_box_drawing = true
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
 
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
 
 [font.glyph_offset]
 x = 0
