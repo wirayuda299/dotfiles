@@ -1,4 +1,4 @@
-local opts = {
+return {
   appearance = {
     nerd_font_variant = "mono",
     kind_icons = {
@@ -29,15 +29,25 @@ local opts = {
       TypeParameter = "󰊄",
     }
   },
-
   fuzzy = { implementation = "prefer_rust" },
-
   sources = {
-    default = { "lsp", "snippets", "path" },
+    default = {
+      "lsp", "snippets", "path",
+    },
     providers = {
-      lsp = { score_offset = 1000 },
+      lsp = {
+        score_offset = 1000,
+        async = true,
+      },
       snippets = { score_offset = 500 },
-      path = { score_offset = 100 },
+      path = {
+        score_offset = 100,
+        opts = {
+          get_cwd = function(_)
+            return vim.fn.getcwd()
+          end,
+        },
+      },
     }
   },
 
@@ -67,11 +77,23 @@ local opts = {
         max_height = 20,
       },
     },
-
-    list = {
-      max_items = 8,
-    },
-
+    --
+    -- list = {
+    --   max_items = function(ctx)
+    --     -- Get the source name
+    --     local source = ctx.source
+    --     if source == 'lsp' then
+    --       local clients = vim.lsp.get_clients({ bufnr = 0 })
+    --       for _, client in ipairs(clients) do
+    --         if client.name == 'tailwindcss' then
+    --           return 8
+    --         end
+    --       end
+    --     end
+    --     return 200
+    --   end,
+    -- },
+    -- --
     menu = {
       border = "none",
       scrollbar = false,
@@ -79,5 +101,3 @@ local opts = {
   },
 
 }
-
-return opts

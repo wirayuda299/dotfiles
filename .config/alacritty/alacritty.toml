@@ -5,10 +5,10 @@ live_config_reload = true
 TERM = "xterm-256color"
 
 [window]
-padding = { x = 0, y = 0 }  # Zero padding for max performance
+padding = { x = 0, y = 0 } 
 dynamic_padding = false
 decorations = "Full"
-opacity = 0.93
+opacity = 0.6
 startup_mode = "Windowed"
 position = { x = 240, y = 240 }
 
@@ -20,8 +20,9 @@ history = 5000
 multiplier = 1 
 
 [font]
-size = 11
+size = 10
 builtin_box_drawing = true
+
 [font.bold]
 family = "JetBrainsMono Nerd Font"
 style = "Bold"
@@ -39,7 +40,7 @@ y = 0
 
 [font.offset]
 x = 0
-y = 0
+y = 5
 
 [colors]
 draw_bold_text_with_bright_colors = false

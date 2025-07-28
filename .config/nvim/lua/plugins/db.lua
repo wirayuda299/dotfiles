@@ -6,13 +6,10 @@ return {
     { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
   },
   cmd = {
-    'DBUI',
-    'DBUIToggle',
-    'DBUIAddConnection',
-    'DBUIFindBuffer',
+    "DBUIToggle",
   },
   keys = {
-    { "n", "<C-d>", "<cmd>DBUIToggle<cr>", { silent = true } }
+    { "<C-d>", "<cmd>DBUIToggle<cr>", { silent = true } }
   },
   config = function()
     local data_path = vim.fn.stdpath("data")
