@@ -8,11 +8,6 @@ return {
       on_attach = function(client, bufnr)
         client.server_capabilities.semanticTokensProvider = nil
       end,
-      -- flags = {
-      --   debounce_text_changes = 300,
-      --   allow_incremental_sync = true,
-      -- },
-
     }
   end,
 }

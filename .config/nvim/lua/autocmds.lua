@@ -36,28 +36,19 @@ autocmd("LspAttach", {
     require("utils").diagnostics()
 
     local map = require("utils").map
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { silent = true })
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, { silent = true })
+    vim.keymap.set("n", "gD", vim.lsp.buf.implementation, { silent = true })
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, { silent = true })
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { silent = true })
 
-    map("gd", function()
-      vim.lsp.buf.definition()
-    end, "Go to definition", "n", bufnr)
-
-    map("gI", function()
-      vim.lsp.buf.implementation()
-    end, "Go to implementation", "n", bufnr)
-    map("gr", function()
-      vim.lsp.buf.references()
-    end, "References", "n", bufnr)
-    map("gt", function()
-      vim.lsp.buf.type_definition()
-    end, "Go to type definition", "n", bufnr)
-
-    map('[d', function()
+    vim.keymap.set('n', '[d', function()
       vim.diagnostic.jump({ float = true, count = -1 })
-    end, 'Previous Diagnostic', 'n', bufnr)
+    end, { silent = true })
 
-    map(']d', function()
+    vim.keymap.set('n', ']d', function()
       vim.diagnostic.jump({ float = true, count = 1 })
-    end, 'Next Diagnostic', 'n', bufnr)
+    end, { silent = true })
   end,
 })
 

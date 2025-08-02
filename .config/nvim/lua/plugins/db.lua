@@ -1,16 +1,5 @@
 return {
-
-  'kristijanhusak/vim-dadbod-ui',
-  dependencies = {
-    { 'tpope/vim-dadbod',                     lazy = true },
-    { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
-  },
-  cmd = {
-    "DBUIToggle",
-  },
-  keys = {
-    { "<C-d>", "<cmd>DBUIToggle<cr>", { silent = true } }
-  },
+  "tpope/vim-dadbod",
   config = function()
     local data_path = vim.fn.stdpath("data")
     vim.g.db_ui_use_nerd_fonts = 1
@@ -20,5 +9,40 @@ return {
     vim.g.db_ui_use_nerd_fonts = true
     vim.g.db_ui_use_nvim_notify = true
     vim.g.db_ui_execute_on_save = false
-  end
+  end,
+  ft = { "sql", "mysql", "plsql" },
+  keys = {
+    { "<C-d>", "<cmd>DBUIToggle<cr>", { silent = true } }
+  },
+  specs = {
+    {
+      "kristijanhusak/vim-dadbod-ui",
+      dependencies = { "tpope/vim-dadbod" },
+      cmd = {
+        "DBUI",
+        "DBUIToggle",
+        "DBUIAddConnection",
+        "DBUIFindBuffer",
+      },
+    },
+    {
+      "kristijanhusak/vim-dadbod-completion",
+      lazy = true,
+      specs = {
+        {
+          "saghen/blink.cmp",
+          opts = {
+            sources = {
+              per_filetype = {
+                sql = { "snippets", "dadbod", "buffer" },
+              },
+              providers = {
+                dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 }

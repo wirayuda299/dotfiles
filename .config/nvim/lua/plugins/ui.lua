@@ -18,4 +18,12 @@ return {
       options = { theme = "nightfly" }
     },
   },
+
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "LspAttach",
+    opts = {
+      preset = "minimal"
+    },
+  }
 }

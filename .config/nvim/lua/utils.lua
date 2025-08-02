@@ -1,11 +1,10 @@
 local M = {}
 
-
 function M.map(keys, func, desc, mode, bufnr)
   mode = mode or 'n'
   if func then
     vim.keymap.set(mode, keys, func, {
-      buffer = bufnr,
+      bufnr = bufnr,
       desc = 'LSP: ' .. desc,
       silent = true,
       noremap = true
@@ -16,10 +15,7 @@ end
 function M.diagnostics()
   vim.diagnostic.config({
     signs = false,
-    virtual_text = {
-      spacing = 2,
-      source = false,
-    },
+    virtual_text = false,
     float = {
       focusable = false,
       style = "minimal",
