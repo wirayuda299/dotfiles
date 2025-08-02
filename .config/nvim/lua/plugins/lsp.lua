@@ -4,35 +4,42 @@ return {
     cmd = "Mason",
     event = "VeryLazy",
     build = ":MasonUpdate",
-    opts = {},
-  },
-
-  { "neovim/nvim-lspconfig", lazy = true, event = "VeryLazy" },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      { "williamboman/mason.nvim", lazy = true },
-      { "neovim/nvim-lspconfig" },
-    },
     opts = {
       ensure_installed = {
-        "lua_ls", "gopls", "tailwindcss", "cssls", "vtsls", "rust_analyzer",
-      },
-      automatic_installation = true,
-      handlers = require("plugins.configs.lsp"),
-    }
+        "goimports", "gofumpt"
+      }
+    },
   },
 
   {
-    "j-hui/fidget.nvim",
+    "mfussenegger/nvim-jdtls",
+    ft = 'java',
+  },
+  {
+    "neovim/nvim-lspconfig",
     event = "VeryLazy",
-    opts = {
-      notification = {
-        window = {
-          winblend = 0
-        }
-      }
+    dependencies = {
+      "williamboman/mason-lspconfig.nvim",
+      "williamboman/mason.nvim",
     },
-  }
+    config = function()
+      require("mason").setup()
+      require("mason-lspconfig").setup({
+        automatic_enable = {
+          exclude = {
+            "jdtls"
+          }
+        },
+        ensure_installed = {
+          "lua_ls", "gopls", "tailwindcss", "cssls", "vtsls", "rust_analyzer", "jdtls"
+        },
+        automatic_installation = true,
+        handlers = function()
+          return require("plugins.configs.lsp")
+        end
+      })
+    end
+  },
+
+
 }

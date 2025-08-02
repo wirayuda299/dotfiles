@@ -1,6 +1,5 @@
 vim.g.mapleader = " "
 local map = vim.keymap.set
-
 map("n", "<C-n>", "<cmd>enew<cr>", { silent = true })
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 map("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer", silent = true })
@@ -22,7 +21,6 @@ map("v", "<A-Down>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { de
 map("i", "<A-Up>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
 map("i", "<A-Down>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 map("v", "<A-Up>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
-
 map("n", "<leader>bo", function()
   local current = vim.api.nvim_get_current_buf()
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do

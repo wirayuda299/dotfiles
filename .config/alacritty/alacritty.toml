@@ -8,7 +8,7 @@ TERM = "xterm-256color"
 padding = { x = 0, y = 0 } 
 dynamic_padding = false
 decorations = "Full"
-opacity = 0.6
+opacity = 0.65
 startup_mode = "Windowed"
 position = { x = 240, y = 240 }
 
@@ -20,7 +20,7 @@ history = 5000
 multiplier = 1 
 
 [font]
-size = 10
+size = 9.5
 builtin_box_drawing = true
 
 [font.bold]

@@ -14,6 +14,7 @@ autocmd("TextYankPost", {
     vim.hl.on_yank()
   end
 })
+
 autocmd("FileType", {
   group = general_group,
   desc = "Close certain filetypes with 'q'",
@@ -27,7 +28,6 @@ autocmd("FileType", {
   end
 })
 
--------------------------------------- lsp autocommands ------------------------------------------
 autocmd("LspAttach", {
   group = lsp_group,
   callback = function(args)
@@ -37,9 +37,10 @@ autocmd("LspAttach", {
 
     local map = require("utils").map
 
-    vim.keymap.set("n", "gd", function()
+    map("gd", function()
       vim.lsp.buf.definition()
-    end, { buffer = bufnr, desc = "Go to definition", silent = true })
+    end, "Go to definition", "n", bufnr)
+
     map("gI", function()
       vim.lsp.buf.implementation()
     end, "Go to implementation", "n", bufnr)
@@ -71,6 +72,7 @@ autocmd("BufWritePre", {
     })
   end,
 })
+
 autocmd("RecordingEnter", {
   group = performance_group,
   desc = "Optimize for macro recording",

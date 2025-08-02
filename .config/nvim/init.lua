@@ -10,4 +10,6 @@ vim.api.nvim_create_autocmd("UIEnter", {
   end,
 })
 
+
 require("lazy_init")
+vim.lsp.set_log_level("ERROR") -- This will hide WARN messages

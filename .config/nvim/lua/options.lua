@@ -36,7 +36,7 @@ opt.undofile = true
 opt.hlsearch = false
 opt.incsearch = true
 opt.termguicolors = true
-opt.scrolloff = 8
+opt.scrolloff = 10
 opt.signcolumn = "no"
 opt.isfname:append("@-@")
 opt.updatetime = 50
