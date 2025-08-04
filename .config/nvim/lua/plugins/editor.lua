@@ -21,7 +21,6 @@ return {
     },
     opts = {},
     keys = {
-
       {
         "<C-a>",
         "<cmd>WarpAddFile<cr>",
@@ -37,7 +36,6 @@ return {
         "<cmd>WarpShowList<cr>",
         desc = "[Warp] Show list",
       },
-
       {
         "<leader>1",
         "<cmd>WarpGoToIndex 1<cr>",
@@ -67,7 +65,6 @@ return {
     dependencies = { "rafamadriz/friendly-snippets" },
     opts = require('plugins.configs.blink'),
   },
-
   {
     "kdheepak/lazygit.nvim",
     cmd = {
@@ -82,29 +79,11 @@ return {
     }
   },
   {
-    "CRAG666/code_runner.nvim",
-    cmd = "RunCode",
-    cond = function()
-      return not require("utils").should_disable_for_java()
-    end
-  },
-  {
     'stevearc/oil.nvim',
     cmd = { "Oil" },
     opts = require('plugins.configs.oil'),
     keys = {
       { "<leader>e", "<cmd>Oil --float<cr>", silent = true }
     }
-  },
-
-  {
-    "tomiis4/Hypersonic.nvim",
-    event = "CmdlineEnter",
-    desc = "Explain regex in commandline",
-    cond = function()
-      return not require("utils").should_disable_for_java()
-    end,
-    cmd = "Hypersonic",
-    opts = {},
   },
 }
