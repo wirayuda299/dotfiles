@@ -26,11 +26,13 @@ return {
       hidden = "hidden",
     },
   },
+
   files = {
     cmd =
-    "rg --files --hidden --glob '!.git' --glob '!node_modules' --glob '!tmp' --glob '!dist' --glob '!build' --glob '!.next' --glob '!coverage' --glob '!out'",
+    "rg --files --hidden --glob '!.git' --glob '!node_modules' --glob '!tmp' --glob '!dist' --glob '!build' --glob '!.next' --glob '!coverage' --glob '!out' --glob '!target'",
     cwd_prompt = false,
   },
+
   grep = {
     rg_opts =
     "--column --line-number --no-heading --color=always --smart-case --hidden --glob '!.git' --glob '!node_modules' --glob '!dist' --glob '!build'",

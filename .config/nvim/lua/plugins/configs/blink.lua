@@ -32,7 +32,7 @@ return {
   fuzzy = { implementation = "prefer_rust" },
   sources = {
     default = {
-      "lsp", "snippets", "path",
+      "lsp", "snippets", "path","buffer"
     },
     providers = {
       lsp = {

@@ -31,17 +31,16 @@ autocmd("FileType", {
 autocmd("LspAttach", {
   group = lsp_group,
   callback = function(args)
-    local bufnr = args.buf
-
     require("utils").diagnostics()
-
-    local map = require("utils").map
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { silent = true })
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, { silent = true })
-    vim.keymap.set("n", "gD", vim.lsp.buf.implementation, { silent = true })
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, { silent = true })
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { silent = true })
-
+    vim.keymap.set("n", "K", "<cmd>LspUI hover<CR>")
+    vim.keymap.set("n", "gr", "<cmd>LspUI reference<CR>")
+    vim.keymap.set("n", "gd", "<cmd>LspUI definition<CR>")
+    vim.keymap.set("n", "gt", "<cmd>LspUI type_definition<CR>")
+    vim.keymap.set("n", "gi", "<cmd>LspUI implementation<CR>")
+    vim.keymap.set("n", "<leader>rn", "<cmd>LspUI rename<CR>")
+    vim.keymap.set("n", "<leader>ca", "<cmd>LspUI code_action<CR>")
+    vim.keymap.set("n", "<leader>ci", "<cmd>LspUI call_hierarchy incoming_calls<CR>")
+    vim.keymap.set("n", "<leader>co", "<cmd>LspUI call_hierarchy outgoing_calls<CR>")
     vim.keymap.set('n', '[d', function()
       vim.diagnostic.jump({ float = true, count = -1 })
     end, { silent = true })

@@ -1,29 +1,75 @@
 return {
   {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    cmd = "ToggleTerm",
+    config = function()
+      require("toggleterm").setup()
+    end
+  },
+  {
+    "y3owk1n/warp.nvim",
+    cmd = {
+      "WarpAddFile",
+      "WarpAddOnScreenFiles",
+      "WarpDelFile",
+      "WarpMoveTo",
+      "WarpShowList",
+      "WarpClearCurrentList",
+      "WarpClearAllList",
+      "WarpGoToIndex",
+    },
+    opts = {},
+    keys = {
+
+      {
+        "<C-a>",
+        "<cmd>WarpAddFile<cr>",
+        desc = "[Warp] Add",
+      },
+      {
+        "<leader>hd",
+        "<cmd>WarpDelFile<cr>",
+        desc = "[Warp] Delete",
+      },
+      {
+        "<C-l>",
+        "<cmd>WarpShowList<cr>",
+        desc = "[Warp] Show list",
+      },
+
+      {
+        "<leader>1",
+        "<cmd>WarpGoToIndex 1<cr>",
+        desc = "[Warp] Goto #1",
+      },
+      {
+        "<leader>2",
+        "<cmd>WarpGoToIndex 2<cr>",
+        desc = "[Warp] Goto #2",
+      },
+      {
+        "<leader>3",
+        "<cmd>WarpGoToIndex 3<cr>",
+        desc = "[Warp] Goto #3",
+      },
+      {
+        "<leader>4",
+        "<cmd>WarpGoToIndex 4<cr>",
+        desc = "[Warp] Goto #4",
+      },
+    },
+  },
+  {
     "saghen/blink.cmp",
     version = "1.*",
     event = { "InsertEnter" },
     dependencies = { "rafamadriz/friendly-snippets" },
     opts = require('plugins.configs.blink'),
   },
-  {
-    "wirayuda299/harppon",
-    name = "harpoon",
-    cmd = { "MarkAdd", "MarkFloat", "MarkJump", "MarkRemove" },
-    keys = {
-      { "<leader>ma", "<cmd>MarkAdd<cr>",    silent = true },
-      { "<leader>mf", "<cmd>MarkFloat<cr>",  silent = true },
-      { "<leader>mr", "<cmd>MarkRemove<cr>", silent = true },
-      { "<leader>1",  "<cmd>MarkJump 1<cr>", silent = true },
-      { "<leader>2",  "<cmd>MarkJump 2<cr>", silent = true },
-      { "<leader>3",  "<cmd>MarkJump 3<cr>", silent = true },
-      { "<leader>4",  "<cmd>MarkJump 4<cr>", silent = true },
-      { "<leader>5",  "<cmd>MarkJump 5<cr>", silent = true },
-    }
-  },
+
   {
     "kdheepak/lazygit.nvim",
-    lazy = true,
     cmd = {
       "LazyGit",
       "LazyGitConfig",
@@ -38,6 +84,9 @@ return {
   {
     "CRAG666/code_runner.nvim",
     cmd = "RunCode",
+    cond = function()
+      return not require("utils").should_disable_for_java()
+    end
   },
   {
     'stevearc/oil.nvim',
@@ -48,11 +97,13 @@ return {
     }
   },
 
-
   {
     "tomiis4/Hypersonic.nvim",
     event = "CmdlineEnter",
     desc = "Explain regex in commandline",
+    cond = function()
+      return not require("utils").should_disable_for_java()
+    end,
     cmd = "Hypersonic",
     opts = {},
   },

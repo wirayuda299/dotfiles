@@ -30,4 +30,28 @@ function M.diagnostics()
   })
 end
 
+function M.should_disable_for_java()
+  -- Check current filetype
+  if vim.bo.filetype == "java" then
+    return true
+  end
+
+  -- Check if it's a Java project
+  local java_indicators = {
+    'pom.xml',
+    'build.gradle',
+    'build.gradle.kts',
+    'gradlew',
+    'mvnw'
+  }
+
+  for _, indicator in ipairs(java_indicators) do
+    if vim.fn.filereadable(indicator) == 1 then
+      return true
+    end
+  end
+
+  return vim.fn.isdirectory('src/main/java') == 1
+end
+
 return M

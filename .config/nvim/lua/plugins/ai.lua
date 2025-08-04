@@ -17,7 +17,6 @@ return {
   {
     "supermaven-inc/supermaven-nvim",
     event = "InsertEnter",
-    enabled = false,
     cmd = { "SupermavenUseFree", "SupermavenStatus" },
     config = function()
       require("supermaven-nvim").setup({})

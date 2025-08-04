@@ -16,6 +16,7 @@
         "missing-fields",
         "different-requires",
         "inject-field",
-        "undefined-doc-name"
+        "undefined-doc-name",
+        "undefined-field"
     ]
 }

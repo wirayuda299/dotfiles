@@ -1,7 +1,7 @@
 return {
   {
     "j-hui/fidget.nvim",
-    event = "VeryLazy",
+    event = "LspAttach",
     opts = {
       notification = {
         window = {
@@ -13,7 +13,7 @@ return {
 
   {
     'nvim-lualine/lualine.nvim',
-    event = 'VimEnter',
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       options = { theme = "nightfly" }
     },
