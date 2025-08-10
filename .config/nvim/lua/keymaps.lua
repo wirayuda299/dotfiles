@@ -18,7 +18,7 @@ map("v", "<A-Down>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { de
 map("i", "<A-Up>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
 map("i", "<A-Down>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 map("v", "<A-Up>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
-map("n", "<C-t>", "<cmd>ToggleTerm<cr>", { silent = true })
+map("t", "<Esc><Esc>", "<C-\\><C-n>", { silent = true })
 map("n", "<leader>bo", function()
   local current = vim.api.nvim_get_current_buf()
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do

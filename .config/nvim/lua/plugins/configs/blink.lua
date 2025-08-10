@@ -31,13 +31,20 @@ return {
   },
   fuzzy = { implementation = "prefer_rust" },
   sources = {
-    default = {
-      "lsp", "snippets", "path","buffer"
-    },
+    default = { "lsp", "snippets", "path" },
     providers = {
+      dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
       lsp = {
         score_offset = 1000,
         async = true,
+        transform_items = function(_, items)
+          if vim.bo.filetype == "xml" and vim.fn.expand("%:e") == "fxml" then
+            return vim.tbl_filter(function(item)
+              return true
+            end, items)
+          end
+          return items
+        end,
       },
       snippets = { score_offset = 500 },
       path = {
@@ -50,6 +57,7 @@ return {
       },
     }
   },
+  signature = { enabled = true },
 
   keymap = {
     preset = "none",
@@ -62,10 +70,14 @@ return {
     ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
     ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
   },
-
   completion = {
+    list = {
+      selection = {
+        preselect = false,
+        auto_insert = false
+      },
+    },
     ghost_text = { enabled = false },
-
     documentation = {
       auto_show = true,
       auto_show_delay_ms = 150,
@@ -77,23 +89,6 @@ return {
         max_height = 20,
       },
     },
-    --
-    -- list = {
-    --   max_items = function(ctx)
-    --     -- Get the source name
-    --     local source = ctx.source
-    --     if source == 'lsp' then
-    --       local clients = vim.lsp.get_clients({ bufnr = 0 })
-    --       for _, client in ipairs(clients) do
-    --         if client.name == 'tailwindcss' then
-    --           return 8
-    --         end
-    --       end
-    --     end
-    --     return 200
-    --   end,
-    -- },
-    -- --
     menu = {
       border = "none",
       scrollbar = false,
